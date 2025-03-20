@@ -7,16 +7,19 @@ public class BinarySearch<T extends Comparable<T>>{
 
     private int binary(ArrayList<T> values, T valueToFind, int l, int r)
     {
-        if (l == r) {
-            return (values.get(l) == valueToFind) ? l : -1;
-        }
-        int m = l + (r - l) / 2;
+        int index = -1;
 
-        if (valueToFind.compareTo(values.get(m)) <=0) {
-            return binary(values, valueToFind, m + 1, r);
-        } else if (values.get(m).compareTo(valueToFind) >= 0) {
-            return binary(values, valueToFind, l, m - 1);
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (values.get(mid).compareTo(valueToFind) <0) {
+                l = mid + 1;
+            } else if (values.get(mid).compareTo(valueToFind) >0) {
+                r = mid - 1;
+            } else if (values.get(mid).compareTo(valueToFind) ==0) {
+                index = mid;
+                break;
+            }
         }
-        return m;
+        return index;
     }
 }
