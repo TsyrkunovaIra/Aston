@@ -1,5 +1,8 @@
-public class Sorting {
-    public static void quickSort(int[] arr, int low, int high)
+import java.util.ArrayList;
+import java.util.List;
+
+public class Sorting <T extends Comparable<T>> {
+    public void quickSort(ArrayList<T> arr, int low, int high)
     {
         if(low < high) {
             int pi = partition(arr, low, high);
@@ -7,26 +10,22 @@ public class Sorting {
             quickSort(arr, pi + 1, high);
         }
     }
-    private static int partition(int[] arr, int low, int high) {
-        int pivot = arr[high];
+    private int partition(ArrayList<T> arr, int low, int high) {
+        T pivot = arr.get(high);
         int i = (low - 1);
         for (int j = low; j < high; j++) {
-            if (arr[j] < pivot) {
+            if (arr.get(j).compareTo(pivot) <= 0) {
                 i++;
-
-
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+                T temp = arr.get(i);
+                arr.set(i, arr.get(j));
+                arr.set(j, temp);
             }
         }
 
 
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
-
-
+        T temp = arr.get(i + 1);
+        arr.set(i+1, arr.get(high));
+        arr.set(high, temp);
         return i + 1;
     }
 }
