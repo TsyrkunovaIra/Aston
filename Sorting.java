@@ -5,7 +5,7 @@ public class Sorting  {
     public static <T extends Comparable<T>> void quickSort(ArrayList<T> arr, int low, int high)
     {
         if(low < high) {
-            int pi = partition(arr, low, high);
+            int pi = partition(arr, low, high); //опорный элемент
             quickSort(arr, low, pi - 1);
             quickSort(arr, pi + 1, high);
         }
@@ -16,14 +16,14 @@ public class Sorting  {
         for (int j = low; j < high; j++) {
             if (arr.get(j).compareTo(pivot) <= 0) {
                 i++;
-                T temp = arr.get(i);
+                T temp = arr.get(i); //обмен значениями
                 arr.set(i, arr.get(j));
                 arr.set(j, temp);
             }
         }
 
 
-        T temp = arr.get(i + 1);
+        T temp = arr.get(i + 1); //обмен значениями
         arr.set(i+1, arr.get(high));
         arr.set(high, temp);
         return i + 1;
