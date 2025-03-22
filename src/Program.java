@@ -5,32 +5,28 @@ import java.util.Scanner;
 public class Program {
     private Service service;
 
-    //Метож в котором создается меню
+    //Метод в котором создается меню
     public void run(){
-        System.out.println("App is running");
-        String choice;
-        System.out.println("choose option (1) for collection fill or (2) for collection sort, choose (3) if you want to exit");
+        Validator validator = new Validator();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("| App is running. Choose option (1) for collection fill or (2) for collection sort, choose (3) if you want to exit...");
 
+        outerLoop:
         while(true) {
-            Scanner scanner = new Scanner(System.in);
-            choice = scanner.nextLine();
-            if(choice.trim().isEmpty()){
-                System.out.println("Nothing was typed, pls choose number from the menu");
-            }else{
-                try{
-                    Integer intChoice = Integer.parseInt(choice);
-                    if(intChoice == 1 || intChoice == 2){
-                        setService(intChoice);
-                        service.execute();
-                    }else if(intChoice == 3){
-                        System.out.println(intChoice + " - you picked. Exiting the program...");
-                        break;
-                    }else{
-                        System.out.println("Please enter valid number listed above");
-                    }
-                }catch(NumberFormatException e){
-                    System.out.println(e + " - Please enter valid number listed above");
+            String choice = scanner.nextLine();
+            Integer validatedChoice = validator.validateInteger(choice);
+
+            switch(validatedChoice){
+                case 0 -> System.out.println("Invalid. Please enter only the numbers listed above");
+                case 1,2 -> {
+                    setService(validatedChoice);
+                    service.execute();
                 }
+                case 3 -> {
+                    System.out.println("Exiting the program");
+                    break outerLoop;
+                }
+                default -> System.out.println("Invalid number. Please enter only numbers listed above");
             }
         }
     }
