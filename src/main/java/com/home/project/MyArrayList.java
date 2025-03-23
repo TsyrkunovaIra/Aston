@@ -1,5 +1,8 @@
 package com.home.project;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class MyArrayList {
     /**
      * поле отвечающее за объем динамического массива по умолчанию равное 10 элементам
@@ -148,6 +151,15 @@ public class MyArrayList {
         for (int s = size, i =size = 0; i < s; i++)
             objects[i]= null;
     }
+    /**
+     * сортируем элементы коллекции
+     */
+    public void sort(Comparator<Object> objectComparator) {
+        Arrays.sort(elements, 0, size, objectComparator);
+
+    }
+
+
 
 }
 
