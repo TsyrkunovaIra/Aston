@@ -1,8 +1,8 @@
 package com.home.project.model;
 
 public class Bus {
-    private  int number;
-    private  String model;
+    private int number;
+    private String model;
     private long mileage;
     private int year;
 
