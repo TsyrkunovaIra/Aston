@@ -1,6 +1,7 @@
 package src;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,10 +53,15 @@ public class FillService implements Service{
     //Заполнить массив вручную
     public void fillManually(){
         System.out.println("Please enter new object with its properties in this format: <ClassName>, <property1>, <property2>, <property3>");
+        ClassInspector.showClassesAndFields();
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        if(validator.validateClass(input)){
+        if(validator.validateClass(input) && validator.validateClassAndFields(input)){
             System.out.println("Valid. Process and add");
+            Object object = ClassInspector.transformStringtoObject(input);
+            this.mainCollection.add(object);
+        }else{
+            System.out.println("Invalid");
         }
     }
     //Заполнить массив из файла
@@ -75,7 +81,7 @@ public class FillService implements Service{
                     try {
                         System.out.println("* " + field.getName() + " - " + field.get(object));
                     }catch(IllegalAccessException e){
-                        System.out.println(e);
+                        System.out.println(e + "- exception");
                     }
                 }
                 System.out.println(" ");
