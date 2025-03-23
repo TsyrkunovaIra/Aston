@@ -11,13 +11,17 @@ public class FillService implements Service{
     private List<Object> mainCollection = new ArrayList<>();
     private Validator validator = new Validator();
 
+    public FillService(List<Object> mainCollection){
+        this.mainCollection = mainCollection;
+    }
+
     public void execute(){
         showMenu();
     }
 
     // Вывод меню заполнения массива в консоль
     public void showMenu(){
-        System.out.println("| You chose FillService. Now, you can pick:");
+        System.out.println("| You chose Fill-Service. Now, you can pick:");
         System.out.println("| 1. Add objects to collection manually");
         System.out.println("| 2. Add objects from file");
         System.out.println("| 3. Show what inside the collection right now");
@@ -41,7 +45,7 @@ public class FillService implements Service{
                     showExistingArray();
                 }
                 case 4 ->{
-                    System.out.println("Exiting the \"Fill Array\" menu");
+                    System.out.println("Exiting the \"Fill-Service\" menu");
                     break outerLoop;
                 }
                 default -> System.out.println("Invalid number. Please enter only numbers listed above");
