@@ -2,11 +2,10 @@ package src;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
+
+import static src.ClassInspector.*;
 
 public class FillService implements Service{
     private List<Object> mainCollection = new ArrayList<>();
@@ -65,8 +64,37 @@ public class FillService implements Service{
         }
     }
     //Заполнить массив из файла
-    public void fillFromFile(){
-        System.out.println("Add objects from file");
+    public void fillFromFile() {
+        String intChoice;
+        Integer numberOfObjects;
+        while (true) {
+            System.out.println("Please enter number(1-100) of object that u want to add to collection from a file:");
+            Scanner scanner = new Scanner(System.in);
+            intChoice = scanner.nextLine();
+            Integer validatedChoice = validator.validateInteger(intChoice);
+            if (validatedChoice == 0) {
+                System.out.println("Invalid number.");
+            } else {
+                numberOfObjects = Integer.valueOf(intChoice);
+                break;
+            }
+        }
+        List<Object> objects = new ArrayList<>();
+        for (int i = 0; i < numberOfObjects; i++) {
+            Object obj = createRandomObject();
+            objects.add(obj);
+        }
+
+        serializeObjectsToFile(objects, "generated_classes.txt");
+        List<Object> deserializedObjects = deserializeObjectsFromFile("generated_classes.txt");
+
+        // Добавляем десереализованные обьекты в коллекцию
+        if (deserializedObjects != null) {
+            this.mainCollection.addAll(deserializedObjects);
+            System.out.println("Objects have been added to the mainCollection.");
+        }
+
+        clearFileContents("generated_classes.txt");
     }
 
     //Показать какие данные есть в массиве сейчас

@@ -1,6 +1,8 @@
 package src.customs;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable {
     private Integer groupNumber;
     private Integer averageGrade;
     private Integer gradeBookNumber;
