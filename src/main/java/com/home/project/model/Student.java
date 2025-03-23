@@ -35,7 +35,7 @@ public class Student {
         return "Group" + group + " ,ball " + ball + " ,credit number  " + creditNumber;
     }
     public static class StudentBuilder {
-        private Student newStudent;
+        private final Student newStudent;
         public StudentBuilder () {
             newStudent = new Student();
         }
