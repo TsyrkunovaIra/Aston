@@ -1,6 +1,6 @@
 package com.home.project.model;
 
-public class Student {
+public class Student implements Comparable<Student> {
     private  int group;
     private int ball;
     private  long creditNumber;
@@ -34,6 +34,12 @@ public class Student {
     public String toString(){
         return "Group" + group + " ,ball " + ball + " ,credit number  " + creditNumber;
     }
+    @Override
+    public int compareTo(Student o) {
+        return 0;
+    }
+
+
     public static class StudentBuilder {
         private final Student newStudent;
         public StudentBuilder () {
