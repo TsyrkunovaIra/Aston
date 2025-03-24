@@ -1,12 +1,17 @@
 package com.home.project.model;
 
+import com.home.project.service.MyBinarySearch;
+import com.home.project.service.MySorting;
+
+import java.util.Objects;
+
 public class Student implements Comparable<Student> {
-    private  int group;
+    private  String group;
     private int ball;
-    private  long creditNumber;
+    private  int creditNumber;
     private int year;
 
-    public int getGroup() {
+    public String getGroup() {
         return group;
     }
     public int getBall() {
@@ -18,10 +23,10 @@ public class Student implements Comparable<Student> {
     public long getCreditNumber() {
         return creditNumber;
     }
-    public void setCreditNumber(long creditNumber) {
+    public void setCreditNumber(int creditNumber) {
         this.creditNumber = creditNumber;
     }
-    public void setGroup(int group) {
+    public void setGroup(String group) {
         this.group = group;
     }
     public int getYear() {
@@ -35,21 +40,29 @@ public class Student implements Comparable<Student> {
         return "Group" + group + " ,ball " + ball + " ,credit number  " + creditNumber;
     }
     @Override
-    public int compareTo(Student o) {
-        return 0;
+    public int hashCode() {
+        return Objects.hash(group, ball, creditNumber);
     }
-
+    @Override
+    public int compareTo(Student s)
+    {
+        if(this.creditNumber != s.creditNumber)
+            return Integer.compare(this.ball, s.creditNumber);
+        if(!this.group.equals(s.group))
+            return this.group.compareTo(s.group);
+        return Integer.compare(this.ball, s.ball);
+    }
 
     public static class StudentBuilder {
         private final Student newStudent;
         public StudentBuilder () {
             newStudent = new Student();
         }
-        public StudentBuilder withGroup(int group){
+        public StudentBuilder withGroup(String group){
             newStudent.group = group;
             return this;
         }
-        public StudentBuilder withCreditNumber(long creditNumber){
+        public StudentBuilder withCreditNumber(int creditNumber){
             newStudent.creditNumber = creditNumber;
             return this;
         }
