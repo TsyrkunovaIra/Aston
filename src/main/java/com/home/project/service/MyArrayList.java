@@ -1,5 +1,6 @@
 package com.home.project.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -88,11 +89,6 @@ public class MyArrayList {
         Object[] objects = elements;
         for (int s = size, i =size = 0; i < s; i++)
             objects[i]= null;
-    }
-
-    public void sort(Comparator<Object> objectComparator) {
-        Arrays.sort(elements, 0, size, objectComparator);
-
     }
 
 }

@@ -1,5 +1,10 @@
 package com.home.project.model;
 
+import com.home.project.service.MyBinarySearch;
+import com.home.project.service.MySorting;
+
+import java.util.Objects;
+
 public class Bus implements Comparable<Bus>  {
     private int number;
     private String model;
@@ -36,6 +41,10 @@ public class Bus implements Comparable<Bus>  {
         if(!this.model.equals(b.model))
             return this.model.compareTo(b.model);
         return Integer.compare(this.mileage, b.mileage);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, model, mileage);
     }
 
     public static class BusBuilder {

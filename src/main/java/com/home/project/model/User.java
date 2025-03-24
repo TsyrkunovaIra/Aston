@@ -1,5 +1,10 @@
 package com.home.project.model;
 
+import com.home.project.service.MyBinarySearch;
+import com.home.project.service.MySorting;
+
+import java.util.Objects;
+
 public class User implements Comparable<User>{
     private String name;
     private  String password;
@@ -32,9 +37,20 @@ public class User implements Comparable<User>{
     @Override
     public String toString(){
         return "Name " + name + " ,password " + password + " ,email " + email;}
+
     @Override
-    public int compareTo(User o) {
-        return 0;
+    public int hashCode() {
+        return Objects.hash(name, email, password);
+    }
+    @Override
+    public int compareTo(User u) {
+        {
+            if(!this.name.equals(u.name))
+                return this.name.compareTo(u.name);
+            if(!this.email.equals(u.email))
+                return this.email.compareTo(u.email);
+            return this.password.compareTo(u.password);
+        }
     }
 
     public static class UserBuilder {
@@ -42,7 +58,7 @@ public class User implements Comparable<User>{
         public UserBuilder () {
             newUser = new User();
         }
-        public UserBuilder withGroup(String name) {
+        public UserBuilder withName(String name) {
             newUser.name = name;
             return this;
         }
