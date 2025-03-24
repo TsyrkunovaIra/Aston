@@ -1,9 +1,9 @@
 package com.home.project.model;
 
-public class Bus {
+public class Bus implements Comparable<Bus>  {
     private int number;
     private String model;
-    private long mileage;
+    private int mileage;
     private int year;
 
     public int getNumber() {
@@ -15,7 +15,7 @@ public class Bus {
     public long getMileage() {
         return mileage;
     }
-    public void setMileage(long mileage) {
+    public void setMileage(int mileage) {
         this.mileage = mileage;
     }
     public int getYear() {
@@ -28,6 +28,16 @@ public class Bus {
     public String toString() {
         return "Bus number" + number + " ,model " + model + " ,mileage " + mileage;
     }
+    @Override
+    public int compareTo(Bus b)
+    {
+        if(this.number != b.number)
+            return Integer.compare(this.number, b.number);
+        if(!this.model.equals(b.model))
+            return this.model.compareTo(b.model);
+        return Integer.compare(this.mileage, b.mileage);
+    }
+
     public static class BusBuilder {
         private final Bus newBus;
         public BusBuilder () {
@@ -41,7 +51,7 @@ public class Bus {
             newBus.model = model;
             return this;
        }
-       public BusBuilder withMileage(long mileage){
+       public BusBuilder withMileage(int mileage){
             newBus.mileage = mileage;
             return this;
        }

@@ -1,6 +1,6 @@
 package com.home.project.model;
 
-public class User {
+public class User implements Comparable<User>{
     private String name;
     private  String password;
     private String email;
@@ -32,6 +32,11 @@ public class User {
     @Override
     public String toString(){
         return "Name " + name + " ,password " + password + " ,email " + email;}
+    @Override
+    public int compareTo(User o) {
+        return 0;
+    }
+
     public static class UserBuilder {
         private final User newUser;
         public UserBuilder () {
