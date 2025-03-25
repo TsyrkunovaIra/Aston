@@ -2,15 +2,13 @@ package com.home.project.service;
 
 import java.util.*;
 
-public class MyArrayList {
+public class MyArrayList  {
     private static final int DEFAULT_CAPACITY = 10;
     transient Object[] elements;
     private int size;
-
     public MyArrayList() {
         this.elements = new Object[DEFAULT_CAPACITY];
     }
-
     public MyArrayList(int initialCapacity) {
         if (initialCapacity >= 0) {
             this.elements = new Object[initialCapacity];
@@ -21,9 +19,21 @@ public class MyArrayList {
     public int size() {
         return size;
     }
-
     public boolean isEmpty() {
         return size == 0;
+    }
+    public boolean contains(Object o) {
+        return false;
+    }
+    public Iterator<Object> iterator() {
+        return null;
+    }
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    public <T> T[] toArray(T[] a) {
+        return null;
     }
 
     private Object[] capacityGrowth(int minCapacity ) {
@@ -47,6 +57,20 @@ public class MyArrayList {
         elements[size] = object;
         size++;
         return true;
+    }
+
+    public boolean addAll(Collection<?> c) {
+        return false;
+    }
+
+    public boolean addAll(int index, Collection<?> c) {
+        return false;
+    }
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+    public boolean retainAll(Collection<?> c) {
+        return false;
     }
 
     public boolean addAll(MyArrayList otherList) {
@@ -89,6 +113,11 @@ public class MyArrayList {
         checkingIndex(index);
         return elements[index];
     }
+    public void clear(){
+        Object[] objects = elements;
+        for (int s = size, i =size = 0; i < s; i++)
+            objects[i]= null;
+    }
 
     public Object remove (int index){
         checkingIndex(index);
@@ -100,11 +129,29 @@ public class MyArrayList {
         size--;
         return object;
     }
-
-    public void clear(){
-        Object[] objects = elements;
-        for (int s = size, i =size = 0; i < s; i++)
-            objects[i]= null;
+    public Object set(int index, Object element) {
+        return null;
+    }
+    public boolean remove(Object o) {
+        return false;
+    }
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+    public int indexOf(Object o) {
+        return 0;
+    }
+    public int lastIndexOf(Object o) {
+        return 0;
+    }
+    public ListIterator<Object> listIterator() {
+        return null;
+    }
+    public ListIterator<Object> listIterator(int index) {
+        return null;
+    }
+    public List<Object> subList(int fromIndex, int toIndex) {
+        return null;
     }
 
 }

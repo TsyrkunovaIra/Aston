@@ -1,12 +1,14 @@
 package com.home.project.service;
 
+import com.home.project.model.FillService;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Program {
     private Service service;
-    private List<Object> mainCollection = new ArrayList<>();
+    private List <Object> mainCollection = new ArrayList();
 
     //Метод в котором создается меню
     public void run(){

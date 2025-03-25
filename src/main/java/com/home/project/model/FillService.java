@@ -1,4 +1,4 @@
-package com.home.project.service;
+package com.home.project.model;
 import com.home.project.service.ClassInspector;
 import com.home.project.service.MyArrayList;
 import com.home.project.service.Service;
@@ -86,7 +86,7 @@ public class FillService implements Service {
                 break;
             }
         }
-        MyArrayList objects = new MyArrayList();
+        List <Object>objects = new ArrayList<>();
         for (int i = 0; i < numberOfObjects; i++) {
             Object obj = createRandomObject();
             objects.add(obj);
