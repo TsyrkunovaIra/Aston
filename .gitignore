@@ -1,7 +1,7 @@
 *.class
 
-out/
-target/
+/out/
+/target/
 *.jar
 *.war
 *.ear
@@ -9,7 +9,7 @@ target/
 /.mvn/
 dependency-reduced-pom.xml
 
-bin/
+/bin/
 
 .idea/
 *.iml
