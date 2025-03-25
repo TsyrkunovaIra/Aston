@@ -1,4 +1,8 @@
-package com.home.project.model;
+package com.home.project.service;
+
+import com.home.project.model.Bus;
+import com.home.project.model.Student;
+import com.home.project.model.User;
 
 import java.io.*;
 import java.lang.reflect.Constructor;

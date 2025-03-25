@@ -1,4 +1,5 @@
-package com.home.project.model;
+package com.home.project.service;
+import com.home.project.service.ClassInspector;
 import com.home.project.service.MyArrayList;
 import com.home.project.service.Service;
 import com.home.project.service.Validator;
@@ -6,7 +7,7 @@ import com.home.project.service.Validator;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import static com.home.project.model.ClassInspector.*;
+import static com.home.project.service.ClassInspector.*;
 
 
 public class FillService implements Service {
