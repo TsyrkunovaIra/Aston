@@ -8,6 +8,7 @@ import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,71 +32,96 @@ public class ClassInspector {
 
     public static Object transformStringtoObject(String input) {
         List<String> objectParts = Arrays.asList(input.split("\\s*,\\s*"));
-        String className = objectParts.get(0);
+
+        if (objectParts.isEmpty()) {
+            throw new IllegalArgumentException("Invalid input: empty string");
+        }
+
+        String className = objectParts.get(0); // First element is the class name
+        String builderClassName = "src.customs." + className + "$" + className + "Builder";  // Builder class name
 
         try {
-            Class<?> clazz = Class.forName("src.customs." + className);
-            Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+            Class<?> clazz = Class.forName("src.customs." + className);  // Load class dynamically
+            Class<?> builderClass = Class.forName(builderClassName);  // Load builder class dynamically
+            Object builder = builderClass.getDeclaredConstructor().newInstance(); // Create builder object
 
-            Constructor<?> constructor = constructors[0];
-            Class<?>[] paramTypes = constructor.getParameterTypes();
+            // Get all fields of the class
+            Field[] fields = clazz.getDeclaredFields();
 
-            Object[] args = new Object[paramTypes.length];
-            for (int i = 0; i < paramTypes.length; i++) {
-                args[i] = convertToType(objectParts.get(i + 1), paramTypes[i]);
+            // Start from index 1 because index 0 is the class name
+            int fieldIndex = 0;
+            for (int i = 1; i < objectParts.size(); i++) {
+                if (fieldIndex >= fields.length) break;
+
+                String fieldName = fields[fieldIndex].getName();  // Get field name (e.g., "number", "model")
+                String methodName = "with" + capitalizeFirstLetter(fieldName); // Create method name (e.g., "withNumber", "withModel")
+
+                String fieldValue = objectParts.get(i); // Field value
+
+                // Find the appropriate method in the builder class
+                Method[] methods = builderClass.getMethods();
+                for (Method method : methods) {
+                    if (method.getName().equals(methodName) && method.getParameterCount() == 1) {
+                        Class<?> paramType = method.getParameterTypes()[0];
+                        Object convertedValue = convertToType(fieldValue, paramType); // Convert value to correct type
+                        method.invoke(builder, convertedValue);
+                        fieldIndex++;  // Move to the next field
+                        break;
+                    }
+                }
             }
 
-            return constructor.newInstance(args);
+            // Call the final build method (assumed to be "buidBus", "buidUser", etc.)
+            Method buildMethod = builderClass.getMethod("buid" + className);
+            return buildMethod.invoke(builder);
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 InvocationTargetException e) {
+                 InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException("Error creating object: " + e.getMessage(), e);
         }
     }
 
     private static Object convertToType(String value, Class<?> targetType) {
-        if (targetType == int.class || targetType == Integer.class) {
+        if (targetType == int.class) {
             return Integer.parseInt(value);
-        } else if (targetType == double.class || targetType == Double.class) {
-            return Double.parseDouble(value);
-        } else if (targetType == boolean.class || targetType == Boolean.class) {
-            return Boolean.parseBoolean(value);
         } else if (targetType == String.class) {
             return value;
+        } else if (targetType == double.class) {
+            return Double.parseDouble(value);
         }
-        throw new IllegalArgumentException("Unsupported type: " + targetType.getSimpleName());
+        // Add more types as needed
+        throw new IllegalArgumentException("Unsupported type: " + targetType.getName());
     }
 
     public static Object createRandomObject(){
         Random random = new Random();
-
-        // Choose a random class (Bus, User, Student)
         int classChoice = random.nextInt(3); // 0 for Bus, 1 for User, 2 for Student
-        Object createdObject = null;
 
-        // Create a random Bus
-        if (classChoice == 0) {
-            Integer number = random.nextInt(100);
-            String model = "Model" + random.nextInt(100);
-            Integer mileage = random.nextInt(50000);
-            createdObject = new Bus(number, model, mileage);
+        switch (classChoice) {
+            case 0:
+                return new Bus.BusBuilder()
+                        .withNumber(random.nextInt(100))
+                        .withModel("Model" + random.nextInt(100))
+                        .withMileage(random.nextInt(50000))
+                        .withYear(2000 + random.nextInt(24))
+                        .buidBus();
+            case 1:
+                return new User.UserBuilder()
+                        .withName("User" + random.nextInt(100))
+                        .withPassword("Password" + random.nextInt(1000))
+                        .withEmail("user" + random.nextInt(1000) + "@gmail.com")
+                        .withYear(2000 + random.nextInt(24))
+                        .buidUser();
+            case 2:
+                return new Student.StudentBuilder()
+                        .withGroup("Group" + random.nextInt(10))
+                        .withgradeBookNumber(random.nextInt(1000))
+                        .withAverageGrade(random.nextInt(10) + 1)
+                        .withYear(2000 + random.nextInt(24))
+                        .buidStudent();
+            default:
+                return null;
         }
-        // Create a random User
-        else if (classChoice == 1) {
-            String name = "User" + random.nextInt(100);
-            String password = "Password" + random.nextInt(1000);
-            String mail = "user" + random.nextInt(1000) + "@gmail.com";
-            createdObject = new User(name, password, mail);
-        }
-        // Create a random Student
-        else if (classChoice == 2) {
-            Integer groupNumber = random.nextInt(10);
-            Integer averageGrade = random.nextInt(10) + 1;
-            Integer gradeBookNumber = random.nextInt(1000);
-            createdObject = new Student(groupNumber, averageGrade, gradeBookNumber);
-        }
-
-        return createdObject;
     }
 
     public static void serializeObjectsToFile(List<Object> objects, String filename) {
@@ -127,6 +153,13 @@ public class ClassInspector {
             System.err.println("Error clearing file contents: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private static String capitalizeFirstLetter(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
 }
