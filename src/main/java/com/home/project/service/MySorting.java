@@ -1,4 +1,4 @@
-package com.home.project.service;
+package src.algorithms;
 
 import java.util.ArrayList;
 

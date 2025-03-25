@@ -1,13 +1,15 @@
-package src;
+package com.home.project.model;
+import com.home.project.service.MyArrayList;
+import com.home.project.service.Service;
+import com.home.project.service.Validator;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.regex.Pattern;
 
-import static src.ClassInspector.*;
+import static com.home.project.model.ClassInspector.*;
 
-public class FillService implements Service{
+
+public class FillService implements Service {
     private List<Object> mainCollection = new ArrayList<>();
     private Validator validator = new Validator();
 
@@ -83,7 +85,7 @@ public class FillService implements Service{
                 break;
             }
         }
-        List<Object> objects = new ArrayList<>();
+        MyArrayList objects = new MyArrayList();
         for (int i = 0; i < numberOfObjects; i++) {
             Object obj = createRandomObject();
             objects.add(obj);

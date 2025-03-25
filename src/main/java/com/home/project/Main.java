@@ -1,5 +1,6 @@
 package com.home.project;
 
+
 import com.home.project.model.Bus;
 import com.home.project.model.Student;
 import com.home.project.model.User;
@@ -37,23 +38,23 @@ public class Main {
 
         Student s1 = new Student.StudentBuilder()
                 .withGroup("12n")
-                .withCreditNumber(12535)
-                .withBall(8)
+                .withGradeBookNumber(21551)
+                .withAverageGrade(3)
                 .buidStudent();
         Student s2 = new Student.StudentBuilder()
                 .withGroup("12n")
-                .withCreditNumber(12535)
-                .withBall(8)
+                .withGradeBookNumber(21551)
+                .withAverageGrade(4)
                 .buidStudent();
         Student s3 = new Student.StudentBuilder()
                 .withGroup("12n")
-                .withCreditNumber(12535)
-                .withBall(8)
+                .withGradeBookNumber(21551)
+                .withAverageGrade(8)
                 .buidStudent();
         Student s4 = new Student.StudentBuilder()
                 .withGroup("12n")
-                .withCreditNumber(12535)
-                .withBall(8)
+                .withGradeBookNumber(21551)
+                .withAverageGrade(8)
                 .buidStudent();
 
         MyArrayList students = new MyArrayList();

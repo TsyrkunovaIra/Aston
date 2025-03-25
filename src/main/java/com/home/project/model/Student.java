@@ -1,30 +1,28 @@
 package com.home.project.model;
 
-import com.home.project.service.MyBinarySearch;
-import com.home.project.service.MySorting;
-
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Student implements Comparable<Student> {
-    private  String group;
-    private int ball;
-    private  int creditNumber;
+public class Student implements Comparable<Student>, Serializable {
+    private String group;
+    private int averageGrade;
+    private int gradeBookNumber;
     private int year;
 
     public String getGroup() {
         return group;
     }
-    public int getBall() {
-        return ball;
+    public int getAverageGrade() {
+        return averageGrade;
     }
-    public void setBall(int ball) {
-        this.ball = ball;
+    public void setAverageGrade(int averageGrade) {
+        this.averageGrade = averageGrade;
     }
-    public long getCreditNumber() {
-        return creditNumber;
+    public long getgradeBookNumber() {
+        return gradeBookNumber;
     }
-    public void setCreditNumber(int creditNumber) {
-        this.creditNumber = creditNumber;
+    public void setgradeBookNumber(int gradeBookNumber) {
+        this.gradeBookNumber = gradeBookNumber;
     }
     public void setGroup(String group) {
         this.group = group;
@@ -37,23 +35,23 @@ public class Student implements Comparable<Student> {
     }
     @Override
     public String toString(){
-        return "Group" + group + " ,ball " + ball + " ,credit number  " + creditNumber;
+        return "Student Group" + group + " ,average grade " + averageGrade + " ,grade book number  " + gradeBookNumber;
     }
     @Override
     public int hashCode() {
-        return Objects.hash(group, ball, creditNumber);
+        return Objects.hash(group, averageGrade, gradeBookNumber);
     }
     @Override
     public int compareTo(Student s)
     {
-        if(this.creditNumber != s.creditNumber)
-            return Integer.compare(this.ball, s.creditNumber);
+        if(this.gradeBookNumber != s.gradeBookNumber)
+            return Integer.compare(this.averageGrade, s.gradeBookNumber);
         if(!this.group.equals(s.group))
             return this.group.compareTo(s.group);
-        return Integer.compare(this.ball, s.ball);
+        return Integer.compare(this.averageGrade, s.averageGrade);
     }
 
-    public static class StudentBuilder {
+    public static class StudentBuilder implements Serializable{
         private final Student newStudent;
         public StudentBuilder () {
             newStudent = new Student();
@@ -62,24 +60,22 @@ public class Student implements Comparable<Student> {
             newStudent.group = group;
             return this;
         }
-        public StudentBuilder withCreditNumber(int creditNumber){
-            newStudent.creditNumber = creditNumber;
+        public StudentBuilder withGradeBookNumber(int gradeBookNumber){
+            newStudent.gradeBookNumber = gradeBookNumber;
             return this;
         }
-        public StudentBuilder withBall(int ball){
-            newStudent.ball = ball;
+        public StudentBuilder withAverageGrade(int averageGrade){
+            newStudent.averageGrade = averageGrade;
             return this;
         }
         public StudentBuilder withYear(int year){
             newStudent.year = year;
             return this;
         }
+
         public Student buidStudent(){
             return newStudent;
         }
+
     }
 }
-
-
-
-

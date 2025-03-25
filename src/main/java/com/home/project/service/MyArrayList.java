@@ -1,10 +1,8 @@
 package com.home.project.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
-public class MyArrayList {
+public class MyArrayList implements List<Object> {
     private static final int DEFAULT_CAPACITY = 10;
     transient Object[] elements;
     private int size;
@@ -20,8 +18,32 @@ public class MyArrayList {
             throw new IllegalStateException("Начальная емкость (initialCapacity) не может быть меньше или равен нулю");
         }
     }
-    private int size() {
+    public int size() {
         return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        return false;
+    }
+
+    @Override
+    public Iterator<Object> iterator() {
+        return null;
+    }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return null;
     }
 
     private Object[] capacityGrowth(int minCapacity ) {
@@ -44,6 +66,50 @@ public class MyArrayList {
         }
         elements[size] = object;
         size++;
+        return true;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
+    }
+
+    public boolean addAll(MyArrayList otherList) {
+        if (otherList == null || otherList.size == 0) {
+            return false;
+        }
+
+        int newSize = this.size + otherList.size;
+        if (newSize > elements.length) {
+            elements = capacityGrowth(newSize);
+        }
+        System.arraycopy(otherList.elements, 0, this.elements, this.size, otherList.size);
+        this.size = newSize;
         return true;
     }
 
@@ -74,6 +140,11 @@ public class MyArrayList {
         return elements[index];
     }
 
+    @Override
+    public Object set(int index, Object element) {
+        return null;
+    }
+
     public Object remove (int index){
         checkingIndex(index);
         Object[] objects = elements;
@@ -85,6 +156,31 @@ public class MyArrayList {
         return object;
     }
 
+    @Override
+    public int indexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public ListIterator<Object> listIterator() {
+        return null;
+    }
+
+    @Override
+    public ListIterator<Object> listIterator(int index) {
+        return null;
+    }
+
+    @Override
+    public List<Object> subList(int fromIndex, int toIndex) {
+        return null;
+    }
+
     public void clear(){
         Object[] objects = elements;
         for (int s = size, i =size = 0; i < s; i++)
@@ -92,5 +188,3 @@ public class MyArrayList {
     }
 
 }
-
-

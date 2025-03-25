@@ -1,11 +1,10 @@
 package com.home.project.model;
 
-import com.home.project.service.MyBinarySearch;
-import com.home.project.service.MySorting;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User implements Comparable<User>{
+public class User implements Comparable<User>, Serializable{
     private String name;
     private  String password;
     private String email;
@@ -36,7 +35,7 @@ public class User implements Comparable<User>{
     }
     @Override
     public String toString(){
-        return "Name " + name + " ,password " + password + " ,email " + email;}
+        return "User Name " + name + " ,password " + password + " ,email " + email;}
 
     @Override
     public int hashCode() {
@@ -53,7 +52,7 @@ public class User implements Comparable<User>{
         }
     }
 
-    public static class UserBuilder {
+    public static class UserBuilder implements Serializable {
         private final User newUser;
         public UserBuilder () {
             newUser = new User();
@@ -79,4 +78,3 @@ public class User implements Comparable<User>{
         }
     }
 }
-

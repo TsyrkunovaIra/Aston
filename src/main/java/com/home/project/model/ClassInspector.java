@@ -1,8 +1,4 @@
-package src;
-
-import src.customs.Bus;
-import src.customs.Student;
-import src.customs.User;
+package com.home.project.model;
 
 import java.io.*;
 import java.lang.reflect.Constructor;
@@ -115,7 +111,7 @@ public class ClassInspector {
             case 2:
                 return new Student.StudentBuilder()
                         .withGroup("Group" + random.nextInt(10))
-                        .withgradeBookNumber(random.nextInt(1000))
+                        .withGradeBookNumber(random.nextInt(1000))
                         .withAverageGrade(random.nextInt(10) + 1)
                         .withYear(2000 + random.nextInt(24))
                         .buidStudent();
