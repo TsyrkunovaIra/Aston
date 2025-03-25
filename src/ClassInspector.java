@@ -1,5 +1,6 @@
 package src;
 
+import src.algorithms.MyArrayList;
 import src.customs.Bus;
 import src.customs.Student;
 import src.customs.User;
@@ -135,7 +136,7 @@ public class ClassInspector {
     }
 
     public static List<Object> deserializeObjectsFromFile(String filename) {
-        List<Object> objects = null;
+        List<Object> objects = new ArrayList<>();
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
             objects = (List<Object>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {

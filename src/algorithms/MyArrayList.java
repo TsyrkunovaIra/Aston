@@ -1,10 +1,11 @@
 package src.algorithms;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.io.Serializable;
+import java.util.*;
 
-public class MyArrayList {
+public class MyArrayList<T> implements Iterable<T>, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private static final int DEFAULT_CAPACITY = 10;
     transient Object[] elements;
     private int size;
@@ -42,7 +43,7 @@ public class MyArrayList {
         return capacityGrowth(size + 1);
     }
 
-    public boolean add(Object object){
+    public boolean add(T object){
         if (size == elements.length){
             elements = capacityGrowth();
         }
@@ -57,12 +58,27 @@ public class MyArrayList {
         }
 
         int newSize = this.size + otherList.size;
-        if (newSize > elements.length) {
-            elements = capacityGrowth(newSize);
+
+        // Ensure that the destination array is large enough to accommodate the new elements
+        if (newSize > this.elements.length) {
+            this.elements = capacityGrowth(newSize); // Resize if necessary
         }
-        System.arraycopy(otherList.elements, 0, this.elements, this.size, otherList.size);
-        this.size = newSize;
-        return true;
+
+        // Ensure the source array (otherList.elements) is not null before copying
+        if (otherList.elements != null) {
+            System.arraycopy(otherList.elements, 0, this.elements, this.size, otherList.size);
+            this.size = newSize;
+            return true;
+        } else {
+            // Handle the case where otherList elements is null (this shouldn't happen, but it's good to have a safeguard)
+            return false;
+        }
+    }
+
+    public void addAll(List<Object> list) {
+        for (Object obj : list) {
+            this.add((T) obj);
+        }
     }
 
     private int checkingIndex(int index){
@@ -73,7 +89,7 @@ public class MyArrayList {
     }
 
     private String arrayLimit (int index){
-        return "Количество элементов в массвие: " + size +"общий размер массива: "+ elements.length;
+        return "Количество элементов в массиве: " + size +"общий размер массива: "+ elements.length;
     }
 
     public void add(int index, Object object){
@@ -87,16 +103,16 @@ public class MyArrayList {
         size = i + 1;
     }
 
-    public Object get (int index){
+    public T get (int index){
         checkingIndex(index);
-        return elements[index];
+        return (T) elements[index];
     }
 
-    public Object remove (int index){
+    public T remove (int index){
         checkingIndex(index);
         Object[] objects = elements;
         elements = new Object[objects.length-1];
-        Object object = objects[index];
+        T object = (T) objects[index];
         System.arraycopy(objects,0,elements,0,index);
         System.arraycopy(objects,index +1, elements, index,objects.length);
         size--;
@@ -109,4 +125,24 @@ public class MyArrayList {
             objects[i]= null;
     }
 
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < size;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new java.util.NoSuchElementException();
+                }
+                return (T) elements[index++];
+            }
+        };
+    }
 }

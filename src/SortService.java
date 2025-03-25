@@ -1,15 +1,17 @@
 package src;
 
+import src.algorithms.MyArrayList;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class SortService implements Service{
-    private List<Object> mainCollection = new ArrayList<>();
+    private MyArrayList<Object> mainCollection = new MyArrayList<>();
     private Validator validator = new Validator();
 
-    public SortService(List<Object> mainCollection){
+    public SortService(MyArrayList<Object> mainCollection){
         this.mainCollection = mainCollection;
     }
 
