@@ -1,12 +1,13 @@
 package com.home.project;
 
-
 import com.home.project.model.Bus;
 import com.home.project.model.Student;
 import com.home.project.model.User;
 import com.home.project.service.MyArrayList;
+import com.home.project.service.MyBinarySearch;
+import com.home.project.service.Program;
 
-import java.util.ArrayList;
+import static com.home.project.service.MyBinarySearch.binarySearch;
 
 public class Main {
     public static void main(String[] args) {
@@ -91,6 +92,15 @@ public class Main {
         users.add(u2);
         users.add(u3);
         users.add(u4);
+
+        Program program = new Program();
+        program.setService(students);
+        program.run();
+
+
+
+
+
 
 
 

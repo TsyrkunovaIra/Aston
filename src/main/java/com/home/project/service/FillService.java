@@ -1,4 +1,4 @@
-package com.home.project.model;
+package com.home.project.service;
 import com.home.project.service.ClassInspector;
 import com.home.project.service.MyArrayList;
 import com.home.project.service.Service;

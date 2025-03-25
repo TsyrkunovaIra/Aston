@@ -1,5 +1,7 @@
 package com.home.project.model;
 
+import com.home.project.service.Program;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -33,6 +35,10 @@ public class Bus implements Comparable<Bus>, Serializable {
         this.year = year;
     }
 
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
     @Override
     public String toString() {
         return "Bus number" + number + " ,model " + model + " ,mileage " + mileage;
@@ -51,6 +57,7 @@ public class Bus implements Comparable<Bus>, Serializable {
     public int hashCode() {
         return Objects.hash(number, model, mileage);
     }
+
 
     public static class BusBuilder implements Serializable {
         private final Bus newBus;
