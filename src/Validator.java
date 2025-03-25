@@ -20,7 +20,7 @@ public class Validator
     }
 
     public Boolean validateClass(String input){
-        String regex = "^[A-Z][a-zA-Z0-9]*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*$";
+        String regex = "^[A-Z][a-zA-Z0-9]*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*$";
         if (Pattern.matches(regex, input)) {
             return true;
         } else {
@@ -43,7 +43,7 @@ public class Validator
             clazz = Class.forName("src.customs." + className);
             Field[] fields = clazz.getDeclaredFields();
             for(int i = 0; i < fields.length; i++){
-                if(fields[i].getType().equals(Integer.class)){
+                if(fields[i].getType().equals(int.class)){
                     try{
                         Integer number = Integer.parseInt(classFields.get(i));
                     }catch(NumberFormatException e){

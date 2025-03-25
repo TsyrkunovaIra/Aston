@@ -1,18 +1,22 @@
 package src;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Program {
     private Service service;
+    private List<Object> mainCollection = new ArrayList<>();
 
     //Метод в котором создается меню
     public void run(){
         Validator validator = new Validator();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("| App is running. Choose option (1) for collection fill or (2) for collection sort, choose (3) if you want to exit...");
+        System.out.println("| App is running...");
 
         outerLoop:
         while(true) {
+            System.out.println("| Choose option (1) for collection fill or (2) for collection sort, choose (3) if you want to exit...");
             String choice = scanner.nextLine();
             Integer validatedChoice = validator.validateInteger(choice);
 
@@ -31,15 +35,14 @@ public class Program {
         }
     }
 
-
-    //Вызов одного из сервисов, либо на заполнение массива, либо на сортировку массива
+    //Создаем новый инстанс Сервиса
     public void setService(Integer choice){
         switch(choice) {
             case 1:
-                this.service = new FillService();
+                this.service = new FillService(this.mainCollection);
                 break;
             case 2:
-                this.service = new SortService();
+                this.service = new SortService(this.mainCollection);
                 break;
         }
     }
