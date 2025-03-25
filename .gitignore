@@ -2,6 +2,13 @@
 
 out/
 target/
+*.jar
+*.war
+*.ear
+
+/.mvn/
+dependency-reduced-pom.xml
+
 bin/
 
 .idea/
@@ -9,3 +16,8 @@ bin/
 *.classpath
 *.project
 *.settings/
+*.ipr
+*.iws
+
+Thumbs.db
+ehthumbs.db
