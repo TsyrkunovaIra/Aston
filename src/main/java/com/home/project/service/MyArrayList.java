@@ -2,7 +2,7 @@ package com.home.project.service;
 
 import java.util.*;
 
-public class MyArrayList implements List<Object> {
+public class MyArrayList {
     private static final int DEFAULT_CAPACITY = 10;
     transient Object[] elements;
     private int size;
@@ -26,26 +26,6 @@ public class MyArrayList implements List<Object> {
         return size == 0;
     }
 
-    @Override
-    public boolean contains(Object o) {
-        return false;
-    }
-
-    @Override
-    public Iterator<Object> iterator() {
-        return null;
-    }
-
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
-    @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
-
     private Object[] capacityGrowth(int minCapacity ) {
         int capacity = elements.length;
         if (capacity > 0) {
@@ -67,36 +47,6 @@ public class MyArrayList implements List<Object> {
         elements[size] = object;
         size++;
         return true;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return false;
     }
 
     public boolean addAll(MyArrayList otherList) {
@@ -140,11 +90,6 @@ public class MyArrayList implements List<Object> {
         return elements[index];
     }
 
-    @Override
-    public Object set(int index, Object element) {
-        return null;
-    }
-
     public Object remove (int index){
         checkingIndex(index);
         Object[] objects = elements;
@@ -154,31 +99,6 @@ public class MyArrayList implements List<Object> {
         System.arraycopy(objects,index +1, elements, index,objects.length);
         size--;
         return object;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public ListIterator<Object> listIterator() {
-        return null;
-    }
-
-    @Override
-    public ListIterator<Object> listIterator(int index) {
-        return null;
-    }
-
-    @Override
-    public List<Object> subList(int fromIndex, int toIndex) {
-        return null;
     }
 
     public void clear(){
