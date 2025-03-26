@@ -4,44 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a9ed6d9-6473-4411-b12a-af34a0767805" name="Changes" comment="clear master">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_13_58__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_13_58__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_20_15__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_20_15__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_20_15__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_20_15__Changes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_34__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_34__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_34__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_34__Changes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_43__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_43__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_45__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_45__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_45__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_45__Changes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_03_2025_21_09__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_03_2025_21_09__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BinarySearch.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sorting.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ClassInspector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/ClassInspector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FillService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/FillService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/Program.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SearchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/SearchService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/Service.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SortService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/SortService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/Validator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/algorithms/MyArrayList.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/algorithms/MyBinarySearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/MyBinarySearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/algorithms/MySorting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/MySorting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/algorithms/UniversalComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/UniversalComparator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/customs/Bus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/customs/Bus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/customs/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/customs/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/customs/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/customs/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/home/project/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/home/project/model/Bus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/home/project/model/Student.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/home/project/model/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/home/project/service/MyArrayList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/MyArrayList.java" afterDir="false" />
-    </list>
+    <list default="true" id="6a9ed6d9-6473-4411-b12a-af34a0767805" name="Changes" comment=" final assembly project" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -125,7 +88,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743011706403</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary=" final assembly project">
+      <option name="closed" value="true" />
+      <created>1743014111202</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743014111202</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -142,6 +113,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test run successfully" />
     <MESSAGE value="clear master" />
-    <option name="LAST_COMMIT_MESSAGE" value="clear master" />
+    <MESSAGE value=" final assembly project" />
+    <option name="LAST_COMMIT_MESSAGE" value=" final assembly project" />
   </component>
 </project>
