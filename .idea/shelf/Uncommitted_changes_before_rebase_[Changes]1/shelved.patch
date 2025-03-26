@@ -1,0 +1,499 @@
+Index: src/SortService.java
+===================================================================
+diff --git a/src/SortService.java b/src/SortService.java
+deleted file mode 100644
+--- a/src/SortService.java	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
++++ /dev/null	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
+@@ -1,71 +0,0 @@
+-package src;
+-
+-import java.lang.reflect.Field;
+-import java.util.ArrayList;
+-import java.util.List;
+-import java.util.Scanner;
+-
+-public class SortService implements Service{
+-    private List<Object> mainCollection = new ArrayList<>();
+-    private Validator validator = new Validator();
+-
+-    public SortService(List<Object> mainCollection){
+-        this.mainCollection = mainCollection;
+-    }
+-
+-    public void execute(){
+-        showMenu();
+-    }
+-
+-    public void showMenu(){
+-        System.out.println("| You chose Sorting-Service. Now, you can pick:");
+-        System.out.println("| 1. Sort exisiting array");
+-        System.out.println("| 2. Show what inside the collection right now");
+-        System.out.println("| 3. Exit the Sorting-Service menu");
+-        Scanner scanner = new Scanner(System.in);
+-
+-        outerLoop:
+-        while(true){
+-            String choice = scanner.nextLine();
+-            Integer validatedChoice = validator.validateInteger(choice);
+-
+-            switch(validatedChoice){
+-                case 1 -> {
+-                    sortArray();
+-                }
+-                case 2 -> {
+-                    showExistingArray();
+-                }
+-                case 3 -> {
+-                    System.out.println("Exiting the \"Sorting-Service\" menu");
+-                    break outerLoop;
+-                }
+-                default -> System.out.println("Invalid number. Please enter only numbers listed above");
+-            }
+-        }
+-    }
+-
+-    public void sortArray(){
+-        System.out.println("The array have been sorted");
+-    }
+-
+-    public void showExistingArray(){
+-        if(this.mainCollection.isEmpty()){
+-            System.out.println("Collection is empty right now");
+-        }else{
+-            for(Object object : mainCollection){
+-                System.out.println("* " + object.getClass().getSimpleName());
+-                for(Field field : object.getClass().getDeclaredFields()){
+-                    field.setAccessible(true);
+-                    try {
+-                        System.out.println("* " + field.getName() + " - " + field.get(object));
+-                    }catch(IllegalAccessException e){
+-                        System.out.println(e + "- exception");
+-                    }
+-                }
+-                System.out.println(" ");
+-            }
+-        }
+-    }
+-
+-}
+Index: src/Validator.java
+===================================================================
+diff --git a/src/Validator.java b/src/Validator.java
+deleted file mode 100644
+--- a/src/Validator.java	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
++++ /dev/null	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
+@@ -1,61 +0,0 @@
+-package src;
+-
+-import java.lang.reflect.Field;
+-import java.util.ArrayList;
+-import java.util.List;
+-import java.util.regex.Pattern;
+-
+-public class Validator
+-{
+-    public Integer validateInteger(String input){
+-        if(input == null || input.trim().isEmpty()){
+-            return 0;
+-        }
+-        try{
+-            Integer number = Integer.parseInt(input);
+-            return number;
+-        }catch (NumberFormatException e){
+-            return 0;
+-        }
+-    }
+-
+-    public Boolean validateClass(String input){
+-        String regex = "^[A-Z][a-zA-Z0-9]*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*$";
+-        if (Pattern.matches(regex, input)) {
+-            return true;
+-        } else {
+-            System.out.println("Invalid format! Example: Person,name,age,email");
+-            return false;
+-        }
+-    }
+-
+-    public Boolean validateClassAndFields(String input) {
+-        String[] objectParts = input.split("\\s*,\\s*");
+-        String className = objectParts[0];
+-        List<String> classFields = new ArrayList();
+-
+-        for(int i = 1; i < objectParts.length; i++){
+-            classFields.add(objectParts[i]);
+-        }
+-
+-        Class<?> clazz;
+-        try {
+-            clazz = Class.forName("src.customs." + className);
+-            Field[] fields = clazz.getDeclaredFields();
+-            for(int i = 0; i < fields.length; i++){
+-                if(fields[i].getType().equals(Integer.class)){
+-                    try{
+-                        Integer number = Integer.parseInt(classFields.get(i));
+-                    }catch(NumberFormatException e){
+-                        return false;
+-                    }
+-                }
+-            }
+-        } catch (ClassNotFoundException e) {
+-            return false;
+-        }
+-        return true;
+-    }
+-
+-}
+-
+Index: src/ClassInspector.java
+===================================================================
+diff --git a/src/ClassInspector.java b/src/ClassInspector.java
+deleted file mode 100644
+--- a/src/ClassInspector.java	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
++++ /dev/null	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
+@@ -1,132 +0,0 @@
+-package src;
+-
+-import src.customs.Bus;
+-import src.customs.Student;
+-import src.customs.User;
+-
+-import java.io.*;
+-import java.lang.reflect.Constructor;
+-import java.lang.reflect.Field;
+-import java.lang.reflect.InvocationTargetException;
+-import java.util.ArrayList;
+-import java.util.Arrays;
+-import java.util.List;
+-import java.util.Random;
+-
+-public class ClassInspector {
+-
+-    public static void showClassesAndFields() {
+-        Class<?>[] classes = {Bus.class, Student.class, User.class};
+-        System.out.println("Classes avaliable: ");
+-        int i = 0;
+-        for (Class<?> clazz : classes) {
+-            i++;
+-            System.out.print(i + ")" + clazz.getSimpleName() + ",");
+-            for (Field field : clazz.getDeclaredFields()) {
+-                System.out.print(" " + field.getName()+ "(" +field.getType().getSimpleName() + "),");
+-            }
+-            System.out.println("");
+-        }
+-    }
+-
+-    public static Object transformStringtoObject(String input) {
+-        List<String> objectParts = Arrays.asList(input.split("\\s*,\\s*"));
+-        String className = objectParts.get(0);
+-
+-        try {
+-            Class<?> clazz = Class.forName("src.customs." + className);
+-            Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+-
+-            Constructor<?> constructor = constructors[0];
+-            Class<?>[] paramTypes = constructor.getParameterTypes();
+-
+-            Object[] args = new Object[paramTypes.length];
+-            for (int i = 0; i < paramTypes.length; i++) {
+-                args[i] = convertToType(objectParts.get(i + 1), paramTypes[i]);
+-            }
+-
+-            return constructor.newInstance(args);
+-
+-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+-                 InvocationTargetException e) {
+-            throw new RuntimeException("Error creating object: " + e.getMessage(), e);
+-        }
+-    }
+-
+-    private static Object convertToType(String value, Class<?> targetType) {
+-        if (targetType == int.class || targetType == Integer.class) {
+-            return Integer.parseInt(value);
+-        } else if (targetType == double.class || targetType == Double.class) {
+-            return Double.parseDouble(value);
+-        } else if (targetType == boolean.class || targetType == Boolean.class) {
+-            return Boolean.parseBoolean(value);
+-        } else if (targetType == String.class) {
+-            return value;
+-        }
+-        throw new IllegalArgumentException("Unsupported type: " + targetType.getSimpleName());
+-    }
+-
+-    public static Object createRandomObject(){
+-        Random random = new Random();
+-
+-        // Choose a random class (Bus, User, Student)
+-        int classChoice = random.nextInt(3); // 0 for Bus, 1 for User, 2 for Student
+-        Object createdObject = null;
+-
+-        // Create a random Bus
+-        if (classChoice == 0) {
+-            Integer number = random.nextInt(100);
+-            String model = "Model" + random.nextInt(100);
+-            Integer mileage = random.nextInt(50000);
+-            createdObject = new Bus(number, model, mileage);
+-        }
+-        // Create a random User
+-        else if (classChoice == 1) {
+-            String name = "User" + random.nextInt(100);
+-            String password = "Password" + random.nextInt(1000);
+-            String mail = "user" + random.nextInt(1000) + "@gmail.com";
+-            createdObject = new User(name, password, mail);
+-        }
+-        // Create a random Student
+-        else if (classChoice == 2) {
+-            Integer groupNumber = random.nextInt(10);
+-            Integer averageGrade = random.nextInt(10) + 1;
+-            Integer gradeBookNumber = random.nextInt(1000);
+-            createdObject = new Student(groupNumber, averageGrade, gradeBookNumber);
+-        }
+-
+-        return createdObject;
+-    }
+-
+-    public static void serializeObjectsToFile(List<Object> objects, String filename) {
+-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+-            out.writeObject(objects);
+-            System.out.println("Objects have been serialized to " + filename);
+-        } catch (IOException e) {
+-            System.err.println("Error serializing objects: " + e.getMessage());
+-            e.printStackTrace();
+-        }
+-    }
+-
+-    public static List<Object> deserializeObjectsFromFile(String filename) {
+-        List<Object> objects = null;
+-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+-            objects = (List<Object>) in.readObject();
+-        } catch (IOException | ClassNotFoundException e) {
+-            System.err.println("Error deserializing objects: " + e.getMessage());
+-            e.printStackTrace();
+-        }
+-        return objects;
+-    }
+-
+-    public static void clearFileContents(String filename) {
+-        try (FileWriter fileWriter = new FileWriter(filename)) {
+-            fileWriter.write("");
+-            System.out.println("The contents of " + filename + " have been erased.");
+-        } catch (IOException e) {
+-            System.err.println("Error clearing file contents: " + e.getMessage());
+-            e.printStackTrace();
+-        }
+-    }
+-
+-}
+Index: src/Service.java
+===================================================================
+diff --git a/src/Service.java b/src/Service.java
+deleted file mode 100644
+--- a/src/Service.java	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
++++ /dev/null	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
+@@ -1,5 +0,0 @@
+-package src;
+-
+-public interface Service {
+-    public void execute();
+-}
+Index: src/Main.java
+===================================================================
+diff --git a/src/Main.java b/src/Main.java
+deleted file mode 100644
+--- a/src/Main.java	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
++++ /dev/null	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
+@@ -1,8 +0,0 @@
+-package src;
+-
+-public class Main {
+-    public static void main(String args[]){
+-        Program program = new Program();
+-        program.run();
+-    }
+-}
+Index: src/FillService.java
+===================================================================
+diff --git a/src/FillService.java b/src/FillService.java
+deleted file mode 100644
+--- a/src/FillService.java	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
++++ /dev/null	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
+@@ -1,123 +0,0 @@
+-package src;
+-
+-import java.lang.reflect.Field;
+-import java.lang.reflect.InvocationTargetException;
+-import java.util.*;
+-import java.util.regex.Pattern;
+-
+-import static src.ClassInspector.*;
+-
+-public class FillService implements Service{
+-    private List<Object> mainCollection = new ArrayList<>();
+-    private Validator validator = new Validator();
+-
+-    public FillService(List<Object> mainCollection){
+-        this.mainCollection = mainCollection;
+-    }
+-
+-    public void execute(){
+-        showMenu();
+-    }
+-
+-    // Вывод меню заполнения массива в консоль
+-    public void showMenu(){
+-        System.out.println("| You chose Fill-Service. Now, you can pick:");
+-        System.out.println("| 1. Add objects to collection manually");
+-        System.out.println("| 2. Add objects from file");
+-        System.out.println("| 3. Show what inside the collection right now");
+-        System.out.println("| 4. Exit the FillService menu");
+-        Scanner scanner = new Scanner(System.in);
+-
+-        outerLoop:
+-        while(true){
+-            String choice = scanner.nextLine();
+-            Integer validatedChoice = validator.validateInteger(choice);
+-
+-            switch(validatedChoice){
+-                case 0 -> System.out.println("Invalid. Please enter only the numbers listed above");
+-                case 1 -> {
+-                    fillManually();
+-                }
+-                case 2 -> {
+-                    fillFromFile();
+-                }
+-                case 3 -> {
+-                    showExistingArray();
+-                }
+-                case 4 ->{
+-                    System.out.println("Exiting the \"Fill-Service\" menu");
+-                    break outerLoop;
+-                }
+-                default -> System.out.println("Invalid number. Please enter only numbers listed above");
+-            }
+-        }
+-    }
+-
+-    //Заполнить массив вручную
+-    public void fillManually(){
+-        System.out.println("Please enter new object with its properties in this format: <ClassName>, <property1>, <property2>, <property3>");
+-        ClassInspector.showClassesAndFields();
+-        Scanner scanner = new Scanner(System.in);
+-        String input = scanner.nextLine();
+-        if(validator.validateClass(input) && validator.validateClassAndFields(input)){
+-            System.out.println("Valid. Process and add");
+-            Object object = ClassInspector.transformStringtoObject(input);
+-            this.mainCollection.add(object);
+-        }else{
+-            System.out.println("Invalid");
+-        }
+-    }
+-    //Заполнить массив из файла
+-    public void fillFromFile() {
+-        String intChoice;
+-        Integer numberOfObjects;
+-        while (true) {
+-            System.out.println("Please enter number(1-100) of object that u want to add to collection from a file:");
+-            Scanner scanner = new Scanner(System.in);
+-            intChoice = scanner.nextLine();
+-            Integer validatedChoice = validator.validateInteger(intChoice);
+-            if (validatedChoice == 0) {
+-                System.out.println("Invalid number.");
+-            } else {
+-                numberOfObjects = Integer.valueOf(intChoice);
+-                break;
+-            }
+-        }
+-        List<Object> objects = new ArrayList<>();
+-        for (int i = 0; i < numberOfObjects; i++) {
+-            Object obj = createRandomObject();
+-            objects.add(obj);
+-        }
+-
+-        serializeObjectsToFile(objects, "generated_classes.txt");
+-        List<Object> deserializedObjects = deserializeObjectsFromFile("generated_classes.txt");
+-
+-        // Добавляем десереализованные обьекты в коллекцию
+-        if (deserializedObjects != null) {
+-            this.mainCollection.addAll(deserializedObjects);
+-            System.out.println("Objects have been added to the mainCollection.");
+-        }
+-
+-        clearFileContents("generated_classes.txt");
+-    }
+-
+-    //Показать какие данные есть в массиве сейчас
+-    public void showExistingArray(){
+-        if(this.mainCollection.isEmpty()){
+-            System.out.println("Collection is empty right now");
+-        }else{
+-            for(Object object : mainCollection){
+-                System.out.println("* " + object.getClass().getSimpleName());
+-                for(Field field : object.getClass().getDeclaredFields()){
+-                    field.setAccessible(true);
+-                    try {
+-                        System.out.println("* " + field.getName() + " - " + field.get(object));
+-                    }catch(IllegalAccessException e){
+-                        System.out.println(e + "- exception");
+-                    }
+-                }
+-                System.out.println(" ");
+-            }
+-        }
+-    }
+-}
+Index: src/Program.java
+===================================================================
+diff --git a/src/Program.java b/src/Program.java
+deleted file mode 100644
+--- a/src/Program.java	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
++++ /dev/null	(revision 522c7beec437eeb1011a9be4d5b391d59e05a7f2)
+@@ -1,50 +0,0 @@
+-package src;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-import java.util.Scanner;
+-
+-public class Program {
+-    private Service service;
+-    private List<Object> mainCollection = new ArrayList<>();
+-
+-    //Метод в котором создается меню
+-    public void run(){
+-        Validator validator = new Validator();
+-        Scanner scanner = new Scanner(System.in);
+-        System.out.println("| App is running...");
+-
+-        outerLoop:
+-        while(true) {
+-            System.out.println("| Choose option (1) for collection fill or (2) for collection sort, choose (3) if you want to exit...");
+-            String choice = scanner.nextLine();
+-            Integer validatedChoice = validator.validateInteger(choice);
+-
+-            switch(validatedChoice){
+-                case 0 -> System.out.println("Invalid. Please enter only the numbers listed above");
+-                case 1,2 -> {
+-                    setService(validatedChoice);
+-                    service.execute();
+-                }
+-                case 3 -> {
+-                    System.out.println("Exiting the program");
+-                    break outerLoop;
+-                }
+-                default -> System.out.println("Invalid number. Please enter only numbers listed above");
+-            }
+-        }
+-    }
+-
+-    //Создаем новый инстанс Сервиса
+-    public void setService(Integer choice){
+-        switch(choice) {
+-            case 1:
+-                this.service = new FillService(this.mainCollection);
+-                break;
+-            case 2:
+-                this.service = new SortService(this.mainCollection);
+-                break;
+-        }
+-    }
+-
+-}

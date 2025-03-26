@@ -1,0 +1,1171 @@
+Index: out/production/Aston/.idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/Aston/.idea/modules.xml b/out/production/Aston/.idea/modules.xml
+deleted file mode 100644
+--- a/out/production/Aston/.idea/modules.xml	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectModuleManager">
+-    <modules>
+-      <module fileurl="file://$PROJECT_DIR$/Aston.iml" filepath="$PROJECT_DIR$/Aston.iml" />
+-    </modules>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: out/production/Aston/.idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/Aston/.idea/vcs.xml b/out/production/Aston/.idea/vcs.xml
+deleted file mode 100644
+--- a/out/production/Aston/.idea/vcs.xml	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="VcsDirectoryMappings">
+-    <mapping directory="" vcs="Git" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: src/customs/Bus.java
+===================================================================
+diff --git a/src/customs/Bus.java b/src/customs/Bus.java
+deleted file mode 100644
+--- a/src/customs/Bus.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,17 +0,0 @@
+-package src.customs;
+-
+-import java.io.Serializable;
+-
+-public class Bus implements Serializable {
+-    private Integer number;
+-    private String model;
+-    private Integer mileage;
+-
+-    public Bus(Integer number, String model, Integer mileage) {
+-        this.number = number;
+-        this.model = model;
+-        this.mileage = mileage;
+-    }
+-
+-
+-}
+Index: src/FillService.java
+===================================================================
+diff --git a/src/FillService.java b/src/FillService.java
+deleted file mode 100644
+--- a/src/FillService.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,123 +0,0 @@
+-package src;
+-
+-import java.lang.reflect.Field;
+-import java.lang.reflect.InvocationTargetException;
+-import java.util.*;
+-import java.util.regex.Pattern;
+-
+-import static src.ClassInspector.*;
+-
+-public class FillService implements Service{
+-    private List<Object> mainCollection = new ArrayList<>();
+-    private Validator validator = new Validator();
+-
+-    public FillService(List<Object> mainCollection){
+-        this.mainCollection = mainCollection;
+-    }
+-
+-    public void execute(){
+-        showMenu();
+-    }
+-
+-    // Вывод меню заполнения массива в консоль
+-    public void showMenu(){
+-        System.out.println("| You chose Fill-Service. Now, you can pick:");
+-        System.out.println("| 1. Add objects to collection manually");
+-        System.out.println("| 2. Add objects from file");
+-        System.out.println("| 3. Show what inside the collection right now");
+-        System.out.println("| 4. Exit the FillService menu");
+-        Scanner scanner = new Scanner(System.in);
+-
+-        outerLoop:
+-        while(true){
+-            String choice = scanner.nextLine();
+-            Integer validatedChoice = validator.validateInteger(choice);
+-
+-            switch(validatedChoice){
+-                case 0 -> System.out.println("Invalid. Please enter only the numbers listed above");
+-                case 1 -> {
+-                    fillManually();
+-                }
+-                case 2 -> {
+-                    fillFromFile();
+-                }
+-                case 3 -> {
+-                    showExistingArray();
+-                }
+-                case 4 ->{
+-                    System.out.println("Exiting the \"Fill-Service\" menu");
+-                    break outerLoop;
+-                }
+-                default -> System.out.println("Invalid number. Please enter only numbers listed above");
+-            }
+-        }
+-    }
+-
+-    //Заполнить массив вручную
+-    public void fillManually(){
+-        System.out.println("Please enter new object with its properties in this format: <ClassName>, <property1>, <property2>, <property3>");
+-        ClassInspector.showClassesAndFields();
+-        Scanner scanner = new Scanner(System.in);
+-        String input = scanner.nextLine();
+-        if(validator.validateClass(input) && validator.validateClassAndFields(input)){
+-            System.out.println("Valid. Process and add");
+-            Object object = ClassInspector.transformStringtoObject(input);
+-            this.mainCollection.add(object);
+-        }else{
+-            System.out.println("Invalid");
+-        }
+-    }
+-    //Заполнить массив из файла
+-    public void fillFromFile() {
+-        String intChoice;
+-        Integer numberOfObjects;
+-        while (true) {
+-            System.out.println("Please enter number(1-100) of object that u want to add to collection from a file:");
+-            Scanner scanner = new Scanner(System.in);
+-            intChoice = scanner.nextLine();
+-            Integer validatedChoice = validator.validateInteger(intChoice);
+-            if (validatedChoice == 0) {
+-                System.out.println("Invalid number.");
+-            } else {
+-                numberOfObjects = Integer.valueOf(intChoice);
+-                break;
+-            }
+-        }
+-        List<Object> objects = new ArrayList<>();
+-        for (int i = 0; i < numberOfObjects; i++) {
+-            Object obj = createRandomObject();
+-            objects.add(obj);
+-        }
+-
+-        serializeObjectsToFile(objects, "generated_classes.txt");
+-        List<Object> deserializedObjects = deserializeObjectsFromFile("generated_classes.txt");
+-
+-        // Добавляем десереализованные обьекты в коллекцию
+-        if (deserializedObjects != null) {
+-            this.mainCollection.addAll(deserializedObjects);
+-            System.out.println("Objects have been added to the mainCollection.");
+-        }
+-
+-        clearFileContents("generated_classes.txt");
+-    }
+-
+-    //Показать какие данные есть в массиве сейчас
+-    public void showExistingArray(){
+-        if(this.mainCollection.isEmpty()){
+-            System.out.println("Collection is empty right now");
+-        }else{
+-            for(Object object : mainCollection){
+-                System.out.println("* " + object.getClass().getSimpleName());
+-                for(Field field : object.getClass().getDeclaredFields()){
+-                    field.setAccessible(true);
+-                    try {
+-                        System.out.println("* " + field.getName() + " - " + field.get(object));
+-                    }catch(IllegalAccessException e){
+-                        System.out.println(e + "- exception");
+-                    }
+-                }
+-                System.out.println(" ");
+-            }
+-        }
+-    }
+-}
+Index: out/production/Aston/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/Aston/.gitignore b/out/production/Aston/.gitignore
+deleted file mode 100644
+--- a/out/production/Aston/.gitignore	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,1 +0,0 @@
+-.idea/
+\ No newline at end of file
+Index: src/Program.java
+===================================================================
+diff --git a/src/Program.java b/src/Program.java
+deleted file mode 100644
+--- a/src/Program.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,50 +0,0 @@
+-package src;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-import java.util.Scanner;
+-
+-public class Program {
+-    private Service service;
+-    private List<Object> mainCollection = new ArrayList<>();
+-
+-    //Метод в котором создается меню
+-    public void run(){
+-        Validator validator = new Validator();
+-        Scanner scanner = new Scanner(System.in);
+-        System.out.println("| App is running...");
+-
+-        outerLoop:
+-        while(true) {
+-            System.out.println("| Choose option (1) for collection fill or (2) for collection sort, choose (3) if you want to exit...");
+-            String choice = scanner.nextLine();
+-            Integer validatedChoice = validator.validateInteger(choice);
+-
+-            switch(validatedChoice){
+-                case 0 -> System.out.println("Invalid. Please enter only the numbers listed above");
+-                case 1,2 -> {
+-                    setService(validatedChoice);
+-                    service.execute();
+-                }
+-                case 3 -> {
+-                    System.out.println("Exiting the program");
+-                    break outerLoop;
+-                }
+-                default -> System.out.println("Invalid number. Please enter only numbers listed above");
+-            }
+-        }
+-    }
+-
+-    //Создаем новый инстанс Сервиса
+-    public void setService(Integer choice){
+-        switch(choice) {
+-            case 1:
+-                this.service = new FillService(this.mainCollection);
+-                break;
+-            case 2:
+-                this.service = new SortService(this.mainCollection);
+-                break;
+-        }
+-    }
+-
+-}
+Index: src/Validator.java
+===================================================================
+diff --git a/src/Validator.java b/src/Validator.java
+deleted file mode 100644
+--- a/src/Validator.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,61 +0,0 @@
+-package src;
+-
+-import java.lang.reflect.Field;
+-import java.util.ArrayList;
+-import java.util.List;
+-import java.util.regex.Pattern;
+-
+-public class Validator
+-{
+-    public Integer validateInteger(String input){
+-        if(input == null || input.trim().isEmpty()){
+-            return 0;
+-        }
+-        try{
+-            Integer number = Integer.parseInt(input);
+-            return number;
+-        }catch (NumberFormatException e){
+-            return 0;
+-        }
+-    }
+-
+-    public Boolean validateClass(String input){
+-        String regex = "^[A-Z][a-zA-Z0-9]*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*,\\s*(?:[A-Za-z][a-zA-Z0-9@.]*|\\d+)\\s*$";
+-        if (Pattern.matches(regex, input)) {
+-            return true;
+-        } else {
+-            System.out.println("Invalid format! Example: Person,name,age,email");
+-            return false;
+-        }
+-    }
+-
+-    public Boolean validateClassAndFields(String input) {
+-        String[] objectParts = input.split("\\s*,\\s*");
+-        String className = objectParts[0];
+-        List<String> classFields = new ArrayList();
+-
+-        for(int i = 1; i < objectParts.length; i++){
+-            classFields.add(objectParts[i]);
+-        }
+-
+-        Class<?> clazz;
+-        try {
+-            clazz = Class.forName("src.customs." + className);
+-            Field[] fields = clazz.getDeclaredFields();
+-            for(int i = 0; i < fields.length; i++){
+-                if(fields[i].getType().equals(Integer.class)){
+-                    try{
+-                        Integer number = Integer.parseInt(classFields.get(i));
+-                    }catch(NumberFormatException e){
+-                        return false;
+-                    }
+-                }
+-            }
+-        } catch (ClassNotFoundException e) {
+-            return false;
+-        }
+-        return true;
+-    }
+-
+-}
+-
+Index: src/algorithms/MyArrayList.java
+===================================================================
+diff --git a/src/algorithms/MyArrayList.java b/src/algorithms/MyArrayList.java
+deleted file mode 100644
+--- a/src/algorithms/MyArrayList.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,164 +0,0 @@
+-package src.algorithms;
+-
+-import java.util.Arrays;
+-import java.util.Comparator;
+-
+-
+-public class MyArrayList {
+-    /**
+-     * поле отвечающее за объем динамического массива по умолчанию равное 10 элементам
+-     */
+-    private static final int DEFAULT_CAPACITY = 10;
+-    /**
+-     * поле отвечающие за храние всех элементов коллекции.
+-     * поле не задается вручную, а вычисляется программой и менятеся
+-     * с ростом или уменьшением массива. поле не требует сериализации
+-     */
+-    transient Object[] elements; // так же модификатор transient не допускает утечку информации
+-    // за пределы JVM и упрощает доступ к вложенным классам так как не является приватным
+-    /**
+-     * поле, хранящее в себе количество действительно
+-     * находящихся в массиве элементов
+-     */
+-    private int size;
+-    /**
+-     * конструктор без параментов, создающий пустой массив на 10 элементов
+-     */
+-    public MyArrayList() {
+-        this.elements = new Object[DEFAULT_CAPACITY];
+-    }
+-    /**
+-     * конструктор создающий списочный массив имеющий началную
+-     * емкость заданную пользавателем.
+-     * если начальная емкость (initialCapacity) больше или равно 0,
+-     * то создается новый массив указанного размера.
+-     * Если initialCapacity меньше 0, то генерируется исключение
+-     * IIIegalArgumentException
+-     */
+-    public MyArrayList(int initialCapacity) {
+-        if (initialCapacity >= 0) {
+-            this.elements = new Object[initialCapacity];
+-        } else {
+-            throw new IllegalStateException("Начальная емкость (initialCapacity) не может быть меньше или равен нулю");
+-        }
+-    }
+-    /**
+-     * возвращает количество элементов в списке
+-     */
+-    private int size() {
+-        return size;
+-    }
+-    /**
+-     * метод увеличения емкости массива, чтобы гарантировать, что она может содержать
+-     * то количество элементов, которое указано в параметре minCapacity.
+-     * Если массив заполнен,
+-     * то срабатывает данный метод, в котором внутреннему массиву
+-     * присваивается ссылка на новый созданный массив, полученный в результате
+-     * копирования элементов исходного массива
+-     */
+-    private Object[] capacityGrowth(int minCapacity ) {
+-        int capacity = elements.length;
+-        if (capacity > 0) {
+-            Object[] newCapacity = new Object[(elements.length * 2)];
+-            System.arraycopy(elements, 0, newCapacity, 0, elements.length);
+-            return newCapacity;
+-        }else{
+-            return elements = new Object[Math.max(DEFAULT_CAPACITY, minCapacity)];
+-        }}
+-    /**
+-     * после увеличения размера массива в конец массива добовляется новый элемент,
+-     * а текуйщий парамент size увеличиваем на единицу
+-     */
+-    private Object[] capacityGrowth() {
+-        return capacityGrowth(size + 1);
+-    }
+-    /**
+-     * метод добавляет новый элемент в конец массива.
+-     * внутри метода идет проверка на наличие в массиве места,
+-     * если нет, то срабатывает метод расширения емкости capacityGrowth.
+-     * если элемент добавлен возвращает true
+-     */
+-    public boolean add(Object object){
+-        if (size == elements.length){
+-            elements = capacityGrowth();
+-        }
+-        elements[size] = object;
+-        size++;
+-        return true;
+-    }
+-    /**
+-     * метод проверка корректности искомого индекса.
+-     * указанный индекс не может быть больше чем текущее количество элементов массива
+-     * size или меньше 0
+-     */
+-    private int checkingIndex(int index){
+-        if(index > size || index < 0){
+-            throw new IndexOutOfBoundsException("Элемент не найден!!! " + arrayLimit(index));
+-        }
+-        return index;
+-    }
+-    /**
+-     * выводим предельные значения массива
+-     */
+-    private String arrayLimit (int index){
+-        return "Количество элементов в массвие: " + size +"общий размер массива: "+ elements.length;
+-    }
+-    /**
+-     * добавляем элемент с указанием индекса ячейки
+-     * в которую хотим добавть.
+-     * проверяем наличие искомого элемента в массиве.
+-     * вставоляем элемент, копируем последующие элементы вправо
+-     */
+-    public void add(int index, Object object){
+-        checkingIndex(index);
+-        final int i;
+-        Object[] elements;
+-        if ((i = size) == (elements = this.elements).length)
+-            elements = capacityGrowth();
+-        System.arraycopy(elements, index, elements, index+1, i-index); // увеличиваем массив, сдвигая его с помощью копирования
+-        elements[index] = object;
+-        size = i + 1;
+-    }
+-    /**
+-     * получаем элемент по индексу
+-     */
+-    public Object get (int index){
+-        checkingIndex(index);
+-        return elements[index];
+-    }
+-    /**
+-     * удаление элемента по индексу.
+-     * проверчем на наличие искомого элемента по индексу,
+-     * удаляем элемент, путем копирования сдвигаем последующие элементы влево,
+-     * затем уменьшаем массив на 1
+-     */
+-    public Object remove (int index){
+-        checkingIndex(index);
+-        Object[] objects = elements;
+-        elements = new Object[objects.length-1];
+-        Object object = objects[index];
+-        System.arraycopy(objects,0,elements,0,index);
+-        System.arraycopy(objects,index +1, elements, index,objects.length);
+-        size--;
+-        return object;
+-    }
+-    /**
+-     * удаляем все элементы из массива.
+-     * в цикле проходимся по всем
+-     * элементам массив, присваивая им null
+-     */
+-    public void clear(){
+-        Object[] objects = elements;
+-        for (int s = size, i =size = 0; i < s; i++)
+-            objects[i]= null;
+-    }
+-    /**
+-     * сортируем элементы коллекции
+-     */
+-    public void sort(Comparator<Object> objectComparator) {
+-        Arrays.sort(elements, 0, size, objectComparator);
+-
+-    }
+-
+-
+-}
+Index: src/SortService.java
+===================================================================
+diff --git a/src/SortService.java b/src/SortService.java
+deleted file mode 100644
+--- a/src/SortService.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,71 +0,0 @@
+-package src;
+-
+-import java.lang.reflect.Field;
+-import java.util.ArrayList;
+-import java.util.List;
+-import java.util.Scanner;
+-
+-public class SortService implements Service{
+-    private List<Object> mainCollection = new ArrayList<>();
+-    private Validator validator = new Validator();
+-
+-    public SortService(List<Object> mainCollection){
+-        this.mainCollection = mainCollection;
+-    }
+-
+-    public void execute(){
+-        showMenu();
+-    }
+-
+-    public void showMenu(){
+-        System.out.println("| You chose Sorting-Service. Now, you can pick:");
+-        System.out.println("| 1. Sort exisiting array");
+-        System.out.println("| 2. Show what inside the collection right now");
+-        System.out.println("| 3. Exit the Sorting-Service menu");
+-        Scanner scanner = new Scanner(System.in);
+-
+-        outerLoop:
+-        while(true){
+-            String choice = scanner.nextLine();
+-            Integer validatedChoice = validator.validateInteger(choice);
+-
+-            switch(validatedChoice){
+-                case 1 -> {
+-                    sortArray();
+-                }
+-                case 2 -> {
+-                    showExistingArray();
+-                }
+-                case 3 -> {
+-                    System.out.println("Exiting the \"Sorting-Service\" menu");
+-                    break outerLoop;
+-                }
+-                default -> System.out.println("Invalid number. Please enter only numbers listed above");
+-            }
+-        }
+-    }
+-
+-    public void sortArray(){
+-        System.out.println("The array have been sorted");
+-    }
+-
+-    public void showExistingArray(){
+-        if(this.mainCollection.isEmpty()){
+-            System.out.println("Collection is empty right now");
+-        }else{
+-            for(Object object : mainCollection){
+-                System.out.println("* " + object.getClass().getSimpleName());
+-                for(Field field : object.getClass().getDeclaredFields()){
+-                    field.setAccessible(true);
+-                    try {
+-                        System.out.println("* " + field.getName() + " - " + field.get(object));
+-                    }catch(IllegalAccessException e){
+-                        System.out.println(e + "- exception");
+-                    }
+-                }
+-                System.out.println(" ");
+-            }
+-        }
+-    }
+-
+-}
+Index: out/production/Aston/.idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/Aston/.idea/.gitignore b/out/production/Aston/.idea/.gitignore
+deleted file mode 100644
+--- a/out/production/Aston/.idea/.gitignore	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,3 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+Index: out/production/Aston/.idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/Aston/.idea/misc.xml b/out/production/Aston/.idea/misc.xml
+deleted file mode 100644
+--- a/out/production/Aston/.idea/misc.xml	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="23" project-jdk-type="JavaSDK">
+-    <output url="file://$PROJECT_DIR$/out" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: src/customs/Student.java
+===================================================================
+diff --git a/src/customs/Student.java b/src/customs/Student.java
+deleted file mode 100644
+--- a/src/customs/Student.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,15 +0,0 @@
+-package src.customs;
+-
+-import java.io.Serializable;
+-
+-public class Student implements Serializable {
+-    private Integer groupNumber;
+-    private Integer averageGrade;
+-    private Integer gradeBookNumber;
+-
+-    public Student(Integer groupNumber, Integer averageGrade, Integer gradeBookNumber) {
+-        this.groupNumber = groupNumber;
+-        this.averageGrade = averageGrade;
+-        this.gradeBookNumber = gradeBookNumber;
+-    }
+-}
+Index: src/Service.java
+===================================================================
+diff --git a/src/Service.java b/src/Service.java
+deleted file mode 100644
+--- a/src/Service.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,5 +0,0 @@
+-package src;
+-
+-public interface Service {
+-    public void execute();
+-}
+Index: out/production/Aston/Aston.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/Aston/Aston.iml b/out/production/Aston/Aston.iml
+deleted file mode 100644
+--- a/out/production/Aston/Aston.iml	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,12 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module type="JAVA_MODULE" version="4">
+-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+-    <exclude-output />
+-    <content url="file://$MODULE_DIR$">
+-      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+-    </content>
+-    <orderEntry type="inheritedJdk" />
+-    <orderEntry type="sourceFolder" forTests="false" />
+-    <orderEntry type="library" name="reflections" level="project" />
+-  </component>
+-</module>
+\ No newline at end of file
+Index: src/customs/User.java
+===================================================================
+diff --git a/src/customs/User.java b/src/customs/User.java
+deleted file mode 100644
+--- a/src/customs/User.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,15 +0,0 @@
+-package src.customs;
+-
+-import java.io.Serializable;
+-
+-public class User implements Serializable {
+-    private String name;
+-    private String password;
+-    private String mail;
+-
+-    public User(String name, String password, String mail) {
+-        this.name = name;
+-        this.password = password;
+-        this.mail = mail;
+-    }
+-}
+Index: src/ClassInspector.java
+===================================================================
+diff --git a/src/ClassInspector.java b/src/ClassInspector.java
+deleted file mode 100644
+--- a/src/ClassInspector.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,132 +0,0 @@
+-package src;
+-
+-import src.customs.Bus;
+-import src.customs.Student;
+-import src.customs.User;
+-
+-import java.io.*;
+-import java.lang.reflect.Constructor;
+-import java.lang.reflect.Field;
+-import java.lang.reflect.InvocationTargetException;
+-import java.util.ArrayList;
+-import java.util.Arrays;
+-import java.util.List;
+-import java.util.Random;
+-
+-public class ClassInspector {
+-
+-    public static void showClassesAndFields() {
+-        Class<?>[] classes = {Bus.class, Student.class, User.class};
+-        System.out.println("Classes avaliable: ");
+-        int i = 0;
+-        for (Class<?> clazz : classes) {
+-            i++;
+-            System.out.print(i + ")" + clazz.getSimpleName() + ",");
+-            for (Field field : clazz.getDeclaredFields()) {
+-                System.out.print(" " + field.getName()+ "(" +field.getType().getSimpleName() + "),");
+-            }
+-            System.out.println("");
+-        }
+-    }
+-
+-    public static Object transformStringtoObject(String input) {
+-        List<String> objectParts = Arrays.asList(input.split("\\s*,\\s*"));
+-        String className = objectParts.get(0);
+-
+-        try {
+-            Class<?> clazz = Class.forName("src.customs." + className);
+-            Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+-
+-            Constructor<?> constructor = constructors[0];
+-            Class<?>[] paramTypes = constructor.getParameterTypes();
+-
+-            Object[] args = new Object[paramTypes.length];
+-            for (int i = 0; i < paramTypes.length; i++) {
+-                args[i] = convertToType(objectParts.get(i + 1), paramTypes[i]);
+-            }
+-
+-            return constructor.newInstance(args);
+-
+-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+-                 InvocationTargetException e) {
+-            throw new RuntimeException("Error creating object: " + e.getMessage(), e);
+-        }
+-    }
+-
+-    private static Object convertToType(String value, Class<?> targetType) {
+-        if (targetType == int.class || targetType == Integer.class) {
+-            return Integer.parseInt(value);
+-        } else if (targetType == double.class || targetType == Double.class) {
+-            return Double.parseDouble(value);
+-        } else if (targetType == boolean.class || targetType == Boolean.class) {
+-            return Boolean.parseBoolean(value);
+-        } else if (targetType == String.class) {
+-            return value;
+-        }
+-        throw new IllegalArgumentException("Unsupported type: " + targetType.getSimpleName());
+-    }
+-
+-    public static Object createRandomObject(){
+-        Random random = new Random();
+-
+-        // Choose a random class (Bus, User, Student)
+-        int classChoice = random.nextInt(3); // 0 for Bus, 1 for User, 2 for Student
+-        Object createdObject = null;
+-
+-        // Create a random Bus
+-        if (classChoice == 0) {
+-            Integer number = random.nextInt(100);
+-            String model = "Model" + random.nextInt(100);
+-            Integer mileage = random.nextInt(50000);
+-            createdObject = new Bus(number, model, mileage);
+-        }
+-        // Create a random User
+-        else if (classChoice == 1) {
+-            String name = "User" + random.nextInt(100);
+-            String password = "Password" + random.nextInt(1000);
+-            String mail = "user" + random.nextInt(1000) + "@gmail.com";
+-            createdObject = new User(name, password, mail);
+-        }
+-        // Create a random Student
+-        else if (classChoice == 2) {
+-            Integer groupNumber = random.nextInt(10);
+-            Integer averageGrade = random.nextInt(10) + 1;
+-            Integer gradeBookNumber = random.nextInt(1000);
+-            createdObject = new Student(groupNumber, averageGrade, gradeBookNumber);
+-        }
+-
+-        return createdObject;
+-    }
+-
+-    public static void serializeObjectsToFile(List<Object> objects, String filename) {
+-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+-            out.writeObject(objects);
+-            System.out.println("Objects have been serialized to " + filename);
+-        } catch (IOException e) {
+-            System.err.println("Error serializing objects: " + e.getMessage());
+-            e.printStackTrace();
+-        }
+-    }
+-
+-    public static List<Object> deserializeObjectsFromFile(String filename) {
+-        List<Object> objects = null;
+-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+-            objects = (List<Object>) in.readObject();
+-        } catch (IOException | ClassNotFoundException e) {
+-            System.err.println("Error deserializing objects: " + e.getMessage());
+-            e.printStackTrace();
+-        }
+-        return objects;
+-    }
+-
+-    public static void clearFileContents(String filename) {
+-        try (FileWriter fileWriter = new FileWriter(filename)) {
+-            fileWriter.write("");
+-            System.out.println("The contents of " + filename + " have been erased.");
+-        } catch (IOException e) {
+-            System.err.println("Error clearing file contents: " + e.getMessage());
+-            e.printStackTrace();
+-        }
+-    }
+-
+-}
+Index: src/Main.java
+===================================================================
+diff --git a/src/Main.java b/src/Main.java
+deleted file mode 100644
+--- a/src/Main.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ /dev/null	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
+@@ -1,8 +0,0 @@
+-package src;
+-
+-public class Main {
+-    public static void main(String args[]){
+-        Program program = new Program();
+-        program.run();
+-    }
+-}
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n\r\n    <groupId>com.home.project</groupId>\r\n    <artifactId>Aston1</artifactId>\r\n    <version>1.0-SNAPSHOT</version>\r\n\r\n    <properties>\r\n        <maven.compiler.source>21</maven.compiler.source>\r\n        <maven.compiler.target>21</maven.compiler.target>\r\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\r\n    </properties>\r\n\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ b/pom.xml	(date 1742840729023)
+@@ -5,7 +5,7 @@
+     <modelVersion>4.0.0</modelVersion>
+ 
+     <groupId>com.home.project</groupId>
+-    <artifactId>Aston1</artifactId>
++    <artifactId>Aston</artifactId>
+     <version>1.0-SNAPSHOT</version>
+ 
+     <properties>
+Index: src/algorithms/MyBinarySearch.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/algorithms/MyBinarySearch.java b/src/main/java/com/home/project/service/MyBinarySearch.java
+rename from src/algorithms/MyBinarySearch.java
+rename to src/main/java/com/home/project/service/MyBinarySearch.java
+--- a/src/algorithms/MyBinarySearch.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ b/src/main/java/com/home/project/service/MyBinarySearch.java	(date 1742839592081)
+@@ -1,4 +1,4 @@
+-package src.algorithms;
++package com.home.project.service;
+ 
+ import java.util.ArrayList;
+ 
+Index: src/algorithms/MySorting.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/algorithms/MySorting.java b/src/main/java/com/home/project/service/MySorting.java
+rename from src/algorithms/MySorting.java
+rename to src/main/java/com/home/project/service/MySorting.java
+--- a/src/algorithms/MySorting.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ b/src/main/java/com/home/project/service/MySorting.java	(date 1742839592056)
+@@ -1,4 +1,4 @@
+-package src.algorithms;
++package com.home.project.service;
+ 
+ import java.util.ArrayList;
+ 
+Index: src/main/java/com/home/project/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.home.project;\r\n\r\nimport com.home.project.model.Bus;\r\nimport com.home.project.service.MyArrayList;\r\n\r\npublic class Main {\r\n    public static void main(String[] args) {\r\n\r\n        Bus b1 = new Bus.BusBuilder()\r\n                .withNumber(1231)\r\n                .withMileage(32131)\r\n                .withModel(\"Maz\")\r\n                .buidBus();\r\n        Bus b2 = new Bus.BusBuilder()\r\n                .withNumber(21351)\r\n                .withMileage(321546)\r\n                .withModel(\"Gaz\")\r\n                .buidBus();\r\n        Bus b3 = new Bus.BusBuilder()\r\n                .withNumber(1655)\r\n                .withMileage(3213131)\r\n                .withModel(\"Vaz\")\r\n                .buidBus();\r\n        Bus b4 = new Bus.BusBuilder()\r\n                .withNumber(213131)\r\n                .withMileage(2121)\r\n                .withModel(\"Belaz\")\r\n                .buidBus();\r\n\r\n        MyArrayList buses = new MyArrayList();\r\n        buses.add(b4);\r\n        buses.add(b1);\r\n        buses.add(b2);\r\n        buses.add(b3);\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/home/project/Main.java b/src/main/java/com/home/project/Main.java
+--- a/src/main/java/com/home/project/Main.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ b/src/main/java/com/home/project/Main.java	(date 1742842038999)
+@@ -1,6 +1,8 @@
+ package com.home.project;
+ 
+ import com.home.project.model.Bus;
++import com.home.project.model.Student;
++import com.home.project.model.User;
+ import com.home.project.service.MyArrayList;
+ 
+ public class Main {
+@@ -33,5 +35,64 @@
+         buses.add(b2);
+         buses.add(b3);
+ 
++        Student s1 = new Student.StudentBuilder()
++                .withGroup("12n")
++                .withCreditNumber(12535)
++                .withBall(8)
++                .buidStudent();
++        Student s2 = new Student.StudentBuilder()
++                .withGroup("12n")
++                .withCreditNumber(12535)
++                .withBall(8)
++                .buidStudent();
++        Student s3 = new Student.StudentBuilder()
++                .withGroup("12n")
++                .withCreditNumber(12535)
++                .withBall(8)
++                .buidStudent();
++        Student s4 = new Student.StudentBuilder()
++                .withGroup("12n")
++                .withCreditNumber(12535)
++                .withBall(8)
++                .buidStudent();
++
++        MyArrayList students = new MyArrayList();
++        students.add(s1);
++        students.add(s2);
++        students.add(s3);
++        students.add(s4);
++
++        User u1 = new User.UserBuilder()
++                .withName("tim")
++                .withEmail("kgrkjgerjig@lkfm")
++                .withPassword("154lkj")
++                .buidUser();
++        User u2 = new User.UserBuilder()
++                .withName("nina")
++                .withEmail("fefaerffig@lkfm")
++                .withPassword("1125mj")
++                .buidUser();
++        User u3 = new User.UserBuilder()
++                .withName("tom")
++                .withEmail("fkjfjrfjerof@lk")
++                .withPassword("fdf152")
++                .buidUser();
++        User u4 = new User.UserBuilder()
++                .withName("tilli")
++                .withEmail("efewfqefqre@lkf")
++                .withPassword("1254dff")
++                .buidUser();
++
++        MyArrayList users = new MyArrayList();
++        users.add(u1);
++        users.add(u2);
++        users.add(u3);
++        users.add(u4);
++
++
++
++
++
++
+     }
+ }
+Index: src/main/java/com/home/project/model/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.home.project.model;\r\n\r\npublic class User implements Comparable<User>{\r\n    private String name;\r\n    private  String password;\r\n    private String email;\r\n    private int year;\r\n    public String getName() {\r\n        return name;\r\n    }\r\n    public void setName(String name) {\r\n        this.name = name;\r\n    }\r\n    public String getPassword() {\r\n        return password;\r\n    }\r\n    public void setPassword(String password) {\r\n        this.password = password;\r\n    }\r\n    public String getEmail() {\r\n        return email;\r\n    }\r\n    public void setEmail(String email) {\r\n        this.email = email;\r\n    }\r\n    public int getYear() {\r\n        return year;\r\n    }\r\n    public void setYear(int year) {\r\n        this.year = year;\r\n    }\r\n    @Override\r\n    public String toString(){\r\n        return \"Name \" + name + \" ,password \" + password + \" ,email \" + email;}\r\n    @Override\r\n    public int compareTo(User o) {\r\n        return 0;\r\n    }\r\n\r\n    public static class UserBuilder {\r\n        private final User newUser;\r\n        public UserBuilder () {\r\n            newUser = new User();\r\n        }\r\n        public UserBuilder withGroup(String name) {\r\n            newUser.name = name;\r\n            return this;\r\n        }\r\n        public UserBuilder withPassword(String password) {\r\n            newUser.password = password;\r\n            return this;\r\n        }\r\n        public UserBuilder withEmail(String email) {\r\n            newUser.email = email;\r\n            return this;\r\n        }\r\n        public UserBuilder withYear(int year) {\r\n            newUser.year = year;\r\n            return this;\r\n        }\r\n        public User buidUser() {\r\n            return newUser;\r\n        }\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/home/project/model/User.java b/src/main/java/com/home/project/model/User.java
+--- a/src/main/java/com/home/project/model/User.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ b/src/main/java/com/home/project/model/User.java	(date 1742842038987)
+@@ -1,5 +1,10 @@
+ package com.home.project.model;
+ 
++import com.home.project.service.MyBinarySearch;
++import com.home.project.service.MySorting;
++
++import java.util.Objects;
++
+ public class User implements Comparable<User>{
+     private String name;
+     private  String password;
+@@ -32,9 +37,20 @@
+     @Override
+     public String toString(){
+         return "Name " + name + " ,password " + password + " ,email " + email;}
++
+     @Override
+-    public int compareTo(User o) {
+-        return 0;
++    public int hashCode() {
++        return Objects.hash(name, email, password);
++    }
++    @Override
++    public int compareTo(User u) {
++        {
++            if(!this.name.equals(u.name))
++                return this.name.compareTo(u.name);
++            if(!this.email.equals(u.email))
++                return this.email.compareTo(u.email);
++            return this.password.compareTo(u.password);
++        }
+     }
+ 
+     public static class UserBuilder {
+@@ -42,7 +58,7 @@
+         public UserBuilder () {
+             newUser = new User();
+         }
+-        public UserBuilder withGroup(String name) {
++        public UserBuilder withName(String name) {
+             newUser.name = name;
+             return this;
+         }
+Index: src/main/java/com/home/project/model/Student.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.home.project.model;\r\n\r\npublic class Student implements Comparable<Student> {\r\n    private  int group;\r\n    private int ball;\r\n    private  long creditNumber;\r\n    private int year;\r\n\r\n    public int getGroup() {\r\n        return group;\r\n    }\r\n    public int getBall() {\r\n        return ball;\r\n    }\r\n    public void setBall(int ball) {\r\n        this.ball = ball;\r\n    }\r\n    public long getCreditNumber() {\r\n        return creditNumber;\r\n    }\r\n    public void setCreditNumber(long creditNumber) {\r\n        this.creditNumber = creditNumber;\r\n    }\r\n    public void setGroup(int group) {\r\n        this.group = group;\r\n    }\r\n    public int getYear() {\r\n        return year;\r\n    }\r\n    public void setYear(int year) {\r\n        this.year = year;\r\n    }\r\n    @Override\r\n    public String toString(){\r\n        return \"Group\" + group + \" ,ball \" + ball + \" ,credit number  \" + creditNumber;\r\n    }\r\n    @Override\r\n    public int compareTo(Student o) {\r\n        return 0;\r\n    }\r\n\r\n\r\n    public static class StudentBuilder {\r\n        private final Student newStudent;\r\n        public StudentBuilder () {\r\n            newStudent = new Student();\r\n        }\r\n        public StudentBuilder withGroup(int group){\r\n            newStudent.group = group;\r\n            return this;\r\n        }\r\n        public StudentBuilder withCreditNumber(long creditNumber){\r\n            newStudent.creditNumber = creditNumber;\r\n            return this;\r\n        }\r\n        public StudentBuilder withBall(int ball){\r\n            newStudent.ball = ball;\r\n            return this;\r\n        }\r\n        public StudentBuilder withYear(int year){\r\n            newStudent.year = year;\r\n            return this;\r\n        }\r\n        public Student buidStudent(){\r\n            return newStudent;\r\n        }\r\n    }\r\n}\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/home/project/model/Student.java b/src/main/java/com/home/project/model/Student.java
+--- a/src/main/java/com/home/project/model/Student.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ b/src/main/java/com/home/project/model/Student.java	(date 1742841430392)
+@@ -1,12 +1,17 @@
+ package com.home.project.model;
+ 
++import com.home.project.service.MyBinarySearch;
++import com.home.project.service.MySorting;
++
++import java.util.Objects;
++
+ public class Student implements Comparable<Student> {
+-    private  int group;
++    private  String group;
+     private int ball;
+-    private  long creditNumber;
++    private  int creditNumber;
+     private int year;
+ 
+-    public int getGroup() {
++    public String getGroup() {
+         return group;
+     }
+     public int getBall() {
+@@ -18,10 +23,10 @@
+     public long getCreditNumber() {
+         return creditNumber;
+     }
+-    public void setCreditNumber(long creditNumber) {
++    public void setCreditNumber(int creditNumber) {
+         this.creditNumber = creditNumber;
+     }
+-    public void setGroup(int group) {
++    public void setGroup(String group) {
+         this.group = group;
+     }
+     public int getYear() {
+@@ -35,21 +40,29 @@
+         return "Group" + group + " ,ball " + ball + " ,credit number  " + creditNumber;
+     }
+     @Override
+-    public int compareTo(Student o) {
+-        return 0;
++    public int hashCode() {
++        return Objects.hash(group, ball, creditNumber);
+     }
+-
++    @Override
++    public int compareTo(Student s)
++    {
++        if(this.creditNumber != s.creditNumber)
++            return Integer.compare(this.ball, s.creditNumber);
++        if(!this.group.equals(s.group))
++            return this.group.compareTo(s.group);
++        return Integer.compare(this.ball, s.ball);
++    }
+ 
+     public static class StudentBuilder {
+         private final Student newStudent;
+         public StudentBuilder () {
+             newStudent = new Student();
+         }
+-        public StudentBuilder withGroup(int group){
++        public StudentBuilder withGroup(String group){
+             newStudent.group = group;
+             return this;
+         }
+-        public StudentBuilder withCreditNumber(long creditNumber){
++        public StudentBuilder withCreditNumber(int creditNumber){
+             newStudent.creditNumber = creditNumber;
+             return this;
+         }
+Index: src/main/java/com/home/project/model/Bus.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.home.project.model;\r\n\r\npublic class Bus implements Comparable<Bus>  {\r\n    private int number;\r\n    private String model;\r\n    private int mileage;\r\n    private int year;\r\n\r\n    public int getNumber() {\r\n        return number;\r\n    }\r\n    public String getModel() {\r\n        return model;\r\n    }\r\n    public long getMileage() {\r\n        return mileage;\r\n    }\r\n    public void setMileage(int mileage) {\r\n        this.mileage = mileage;\r\n    }\r\n    public int getYear() {\r\n        return year;\r\n    }\r\n    public void setYear(int year) {\r\n        this.year = year;\r\n    }\r\n    @Override\r\n    public String toString() {\r\n        return \"Bus number\" + number + \" ,model \" + model + \" ,mileage \" + mileage;\r\n    }\r\n    @Override\r\n    public int compareTo(Bus b)\r\n    {\r\n        if(this.number != b.number)\r\n            return Integer.compare(this.number, b.number);\r\n        if(!this.model.equals(b.model))\r\n            return this.model.compareTo(b.model);\r\n        return Integer.compare(this.mileage, b.mileage);\r\n    }\r\n\r\n    public static class BusBuilder {\r\n        private final Bus newBus;\r\n        public BusBuilder () {\r\n           newBus = new Bus();\r\n        }\r\n       public BusBuilder withNumber(int number){\r\n            newBus.number = number;\r\n            return this;\r\n       }\r\n       public BusBuilder withModel(String model){\r\n            newBus.model = model;\r\n            return this;\r\n       }\r\n       public BusBuilder withMileage(int mileage){\r\n            newBus.mileage = mileage;\r\n            return this;\r\n       }\r\n        public BusBuilder withYear(int year){\r\n            newBus.year = year;\r\n            return this;\r\n        }\r\n        public Bus buidBus(){\r\n            return newBus;\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/home/project/model/Bus.java b/src/main/java/com/home/project/model/Bus.java
+--- a/src/main/java/com/home/project/model/Bus.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ b/src/main/java/com/home/project/model/Bus.java	(date 1742841430403)
+@@ -1,5 +1,10 @@
+ package com.home.project.model;
+ 
++import com.home.project.service.MyBinarySearch;
++import com.home.project.service.MySorting;
++
++import java.util.Objects;
++
+ public class Bus implements Comparable<Bus>  {
+     private int number;
+     private String model;
+@@ -37,6 +42,10 @@
+             return this.model.compareTo(b.model);
+         return Integer.compare(this.mileage, b.mileage);
+     }
++    @Override
++    public int hashCode() {
++        return Objects.hash(number, model, mileage);
++    }
+ 
+     public static class BusBuilder {
+         private final Bus newBus;
+Index: src/main/java/com/home/project/service/MyArrayList.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.home.project.service;\r\n\r\nimport java.util.Arrays;\r\nimport java.util.Comparator;\r\n\r\npublic class MyArrayList {\r\n    private static final int DEFAULT_CAPACITY = 10;\r\n    transient Object[] elements;\r\n    private int size;\r\n\r\n    public MyArrayList() {\r\n        this.elements = new Object[DEFAULT_CAPACITY];\r\n    }\r\n\r\n    public MyArrayList(int initialCapacity) {\r\n        if (initialCapacity >= 0) {\r\n            this.elements = new Object[initialCapacity];\r\n        } else {\r\n            throw new IllegalStateException(\"Начальная емкость (initialCapacity) не может быть меньше или равен нулю\");\r\n        }\r\n    }\r\n    private int size() {\r\n        return size;\r\n    }\r\n\r\n    private Object[] capacityGrowth(int minCapacity ) {\r\n        int capacity = elements.length;\r\n        if (capacity > 0) {\r\n            Object[] newCapacity = new Object[(elements.length * 2)];\r\n            System.arraycopy(elements, 0, newCapacity, 0, elements.length);\r\n            return newCapacity;\r\n        }else{\r\n            return elements = new Object[Math.max(DEFAULT_CAPACITY, minCapacity)];\r\n        }}\r\n\r\n    private Object[] capacityGrowth() {\r\n        return capacityGrowth(size + 1);\r\n    }\r\n\r\n    public boolean add(Object object){\r\n        if (size == elements.length){\r\n            elements = capacityGrowth();\r\n        }\r\n        elements[size] = object;\r\n        size++;\r\n        return true;\r\n    }\r\n\r\n    private int checkingIndex(int index){\r\n        if(index > size || index < 0){\r\n            throw new IndexOutOfBoundsException(\"Элемент не найден!!! \" + arrayLimit(index));\r\n        }\r\n        return index;\r\n    }\r\n\r\n    private String arrayLimit (int index){\r\n        return \"Количество элементов в массвие: \" + size +\"общий размер массива: \"+ elements.length;\r\n    }\r\n\r\n    public void add(int index, Object object){\r\n        checkingIndex(index);\r\n        final int i;\r\n        Object[] elements;\r\n        if ((i = size) == (elements = this.elements).length)\r\n            elements = capacityGrowth();\r\n        System.arraycopy(elements, index, elements, index+1, i-index); // увеличиваем массив, сдвигая его с помощью копирования\r\n        elements[index] = object;\r\n        size = i + 1;\r\n    }\r\n\r\n    public Object get (int index){\r\n        checkingIndex(index);\r\n        return elements[index];\r\n    }\r\n\r\n    public Object remove (int index){\r\n        checkingIndex(index);\r\n        Object[] objects = elements;\r\n        elements = new Object[objects.length-1];\r\n        Object object = objects[index];\r\n        System.arraycopy(objects,0,elements,0,index);\r\n        System.arraycopy(objects,index +1, elements, index,objects.length);\r\n        size--;\r\n        return object;\r\n    }\r\n\r\n    public void clear(){\r\n        Object[] objects = elements;\r\n        for (int s = size, i =size = 0; i < s; i++)\r\n            objects[i]= null;\r\n    }\r\n\r\n    public void sort(Comparator<Object> objectComparator) {\r\n        Arrays.sort(elements, 0, size, objectComparator);\r\n\r\n    }\r\n\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/home/project/service/MyArrayList.java b/src/main/java/com/home/project/service/MyArrayList.java
+--- a/src/main/java/com/home/project/service/MyArrayList.java	(revision 54704f5533a02c82ed7a78a390e23ce33577397a)
++++ b/src/main/java/com/home/project/service/MyArrayList.java	(date 1742841430428)
+@@ -1,5 +1,6 @@
+ package com.home.project.service;
+ 
++import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.Comparator;
+ 
+@@ -90,11 +91,6 @@
+             objects[i]= null;
+     }
+ 
+-    public void sort(Comparator<Object> objectComparator) {
+-        Arrays.sort(elements, 0, size, objectComparator);
+-
+-    }
+-
+ }
+ 
+ 
+diff --git a/out/production/Aston/generated_classes.txt b/out/production/Aston/generated_classes.txt
+deleted file mode 100644
+diff --git a/out/production/Aston/README.md b/out/production/Aston/README.md
+deleted file mode 100644
