@@ -42,8 +42,8 @@ public class ClassInspector {
         String builderClassName = "src.customs." + className + "$" + className + "Builder";  // Builder class name
 
         try {
-            Class<?> clazz = Class.forName("src.customs." + className);  // Load class dynamically
-            Class<?> builderClass = Class.forName(builderClassName);  // Load builder class dynamically
+            Class<?> clazz = Class.forName("src.customs." + className);
+            Class<?> builderClass = Class.forName(builderClassName);
             Object builder = builderClass.getDeclaredConstructor().newInstance(); // Create builder object
 
             // Get all fields of the class
@@ -54,25 +54,23 @@ public class ClassInspector {
             for (int i = 1; i < objectParts.size(); i++) {
                 if (fieldIndex >= fields.length) break;
 
-                String fieldName = fields[fieldIndex].getName();  // Get field name (e.g., "number", "model")
-                String methodName = "with" + capitalizeFirstLetter(fieldName); // Create method name (e.g., "withNumber", "withModel")
+                String fieldName = fields[fieldIndex].getName();  // Get field name (number,model)
+                String methodName = "with" + capitalizeFirstLetter(fieldName); // Create method name (withNumber withModel)
 
-                String fieldValue = objectParts.get(i); // Field value
+                String fieldValue = objectParts.get(i);
 
-                // Find the appropriate method in the builder class
                 Method[] methods = builderClass.getMethods();
                 for (Method method : methods) {
                     if (method.getName().equals(methodName) && method.getParameterCount() == 1) {
                         Class<?> paramType = method.getParameterTypes()[0];
-                        Object convertedValue = convertToType(fieldValue, paramType); // Convert value to correct type
+                        Object convertedValue = convertToType(fieldValue, paramType);
                         method.invoke(builder, convertedValue);
-                        fieldIndex++;  // Move to the next field
+                        fieldIndex++;
                         break;
                     }
                 }
             }
 
-            // Call the final build method (assumed to be "buidBus", "buidUser", etc.)
             Method buildMethod = builderClass.getMethod("buid" + className);
             return buildMethod.invoke(builder);
 
@@ -90,7 +88,6 @@ public class ClassInspector {
         } else if (targetType == double.class) {
             return Double.parseDouble(value);
         }
-        // Add more types as needed
         throw new IllegalArgumentException("Unsupported type: " + targetType.getName());
     }
 

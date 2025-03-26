@@ -21,7 +21,7 @@ public class MyArrayList<T> implements Iterable<T>, Serializable {
             throw new IllegalStateException("Начальная емкость (initialCapacity) не может быть меньше или равен нулю");
         }
     }
-    private int size() {
+    public int size() {
         return size;
     }
 
@@ -59,18 +59,15 @@ public class MyArrayList<T> implements Iterable<T>, Serializable {
 
         int newSize = this.size + otherList.size;
 
-        // Ensure that the destination array is large enough to accommodate the new elements
         if (newSize > this.elements.length) {
-            this.elements = capacityGrowth(newSize); // Resize if necessary
+            this.elements = capacityGrowth(newSize);
         }
 
-        // Ensure the source array (otherList.elements) is not null before copying
         if (otherList.elements != null) {
             System.arraycopy(otherList.elements, 0, this.elements, this.size, otherList.size);
             this.size = newSize;
             return true;
         } else {
-            // Handle the case where otherList elements is null (this shouldn't happen, but it's good to have a safeguard)
             return false;
         }
     }
@@ -125,6 +122,12 @@ public class MyArrayList<T> implements Iterable<T>, Serializable {
             objects[i]= null;
     }
 
+    public T set(int index, T element) {
+        checkingIndex(index);
+        T oldElement = (T) elements[index];
+        elements[index] = element;
+        return oldElement;
+    }
 
     @Override
     public Iterator<T> iterator() {

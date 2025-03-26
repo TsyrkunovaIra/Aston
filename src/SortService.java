@@ -1,6 +1,8 @@
 package src;
 
 import src.algorithms.MyArrayList;
+import src.algorithms.MySorting;
+import src.algorithms.UniversalComparator;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -47,8 +49,9 @@ public class SortService implements Service{
         }
     }
 
-    public void sortArray(){
-        System.out.println("The array have been sorted");
+    public void sortArray()
+    {
+        MySorting.quickSort(this.mainCollection, 0, this.mainCollection.size() - 1, new UniversalComparator());
     }
 
     public void showExistingArray(){
