@@ -18,17 +18,17 @@ public class Program {
 
         outerLoop:
         while(true) {
-            System.out.println("| Choose option (1) for collection fill or (2) for collection sort, choose (3) if you want to exit...");
+            System.out.println("| Choose option (1) for collection fill or (2) for collection sort, (3) for element search inside the collection or (4) for exit...");
             String choice = scanner.nextLine();
             Integer validatedChoice = validator.validateInteger(choice);
 
             switch(validatedChoice){
                 case 0 -> System.out.println("Invalid. Please enter only the numbers listed above");
-                case 1,2 -> {
+                case 1,2,3 -> {
                     setService(validatedChoice);
                     service.execute();
                 }
-                case 3 -> {
+                case 4 -> {
                     System.out.println("Exiting the program");
                     break outerLoop;
                 }
@@ -45,6 +45,9 @@ public class Program {
                 break;
             case 2:
                 this.service = new SortService(this.mainCollection);
+                break;
+            case 3:
+                this.service = new SearchService(this.mainCollection);
                 break;
         }
     }
