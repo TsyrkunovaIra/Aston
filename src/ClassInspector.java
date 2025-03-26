@@ -1,6 +1,5 @@
 package src;
 
-import src.algorithms.MyArrayList;
 import src.customs.Bus;
 import src.customs.Student;
 import src.customs.User;
@@ -42,8 +41,8 @@ public class ClassInspector {
         String builderClassName = "src.customs." + className + "$" + className + "Builder";  // Builder class name
 
         try {
-            Class<?> clazz = Class.forName("src.customs." + className);
-            Class<?> builderClass = Class.forName(builderClassName);
+            Class<?> clazz = Class.forName("src.customs." + className);  // Load class dynamically
+            Class<?> builderClass = Class.forName(builderClassName);  // Load builder class dynamically
             Object builder = builderClass.getDeclaredConstructor().newInstance(); // Create builder object
 
             // Get all fields of the class
@@ -54,28 +53,30 @@ public class ClassInspector {
             for (int i = 1; i < objectParts.size(); i++) {
                 if (fieldIndex >= fields.length) break;
 
-                String fieldName = fields[fieldIndex].getName();  // Get field name (number,model)
-                String methodName = "with" + capitalizeFirstLetter(fieldName); // Create method name (withNumber withModel)
+                String fieldName = fields[fieldIndex].getName();  // Get field name (e.g., "number", "model")
+                String methodName = "with" + capitalizeFirstLetter(fieldName); // Create method name (e.g., "withNumber", "withModel")
 
-                String fieldValue = objectParts.get(i);
+                String fieldValue = objectParts.get(i); // Field value
 
+                // Find the appropriate method in the builder class
                 Method[] methods = builderClass.getMethods();
                 for (Method method : methods) {
                     if (method.getName().equals(methodName) && method.getParameterCount() == 1) {
                         Class<?> paramType = method.getParameterTypes()[0];
-                        Object convertedValue = convertToType(fieldValue, paramType);
+                        Object convertedValue = convertToType(fieldValue, paramType); // Convert value to correct type
                         method.invoke(builder, convertedValue);
-                        fieldIndex++;
+                        fieldIndex++;  // Move to the next field
                         break;
                     }
                 }
             }
 
+            // Call the final build method (assumed to be "buidBus", "buidUser", etc.)
             Method buildMethod = builderClass.getMethod("buid" + className);
             return buildMethod.invoke(builder);
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 InvocationTargetException | NoSuchMethodException e) {
+                 InvocationTargetException e) {
             throw new RuntimeException("Error creating object: " + e.getMessage(), e);
         }
     }
@@ -88,6 +89,7 @@ public class ClassInspector {
         } else if (targetType == double.class) {
             return Double.parseDouble(value);
         }
+        // Add more types as needed
         throw new IllegalArgumentException("Unsupported type: " + targetType.getName());
     }
 
@@ -133,7 +135,7 @@ public class ClassInspector {
     }
 
     public static List<Object> deserializeObjectsFromFile(String filename) {
-        List<Object> objects = new ArrayList<>();
+        List<Object> objects = null;
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
             objects = (List<Object>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {

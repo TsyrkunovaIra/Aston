@@ -1,6 +1,5 @@
-package src.algorithms;
+package com.home.project.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -24,10 +23,6 @@ public class MyArrayList {
         return size;
     }
 
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
     private Object[] capacityGrowth(int minCapacity ) {
         int capacity = elements.length;
         if (capacity > 0) {
@@ -48,20 +43,6 @@ public class MyArrayList {
         }
         elements[size] = object;
         size++;
-        return true;
-    }
-
-    public boolean addAll(MyArrayList otherList) {
-        if (otherList == null || otherList.size == 0) {
-            return false;
-        }
-
-        int newSize = this.size + otherList.size;
-        if (newSize > elements.length) {
-            elements = capacityGrowth(newSize);
-        }
-        System.arraycopy(otherList.elements, 0, this.elements, this.size, otherList.size);
-        this.size = newSize;
         return true;
     }
 
@@ -108,4 +89,12 @@ public class MyArrayList {
         for (int s = size, i =size = 0; i < s; i++)
             objects[i]= null;
     }
+
+    public void sort(Comparator<Object> objectComparator) {
+        Arrays.sort(elements, 0, size, objectComparator);
+
+    }
+
+}
+
 

@@ -1,19 +1,15 @@
 package src;
 
-import src.algorithms.MyArrayList;
-import src.algorithms.MySorting;
-import src.algorithms.UniversalComparator;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class SortService implements Service{
-    private MyArrayList<Object> mainCollection = new MyArrayList<>();
+    private List<Object> mainCollection = new ArrayList<>();
     private Validator validator = new Validator();
 
-    public SortService(MyArrayList<Object> mainCollection){
+    public SortService(List<Object> mainCollection){
         this.mainCollection = mainCollection;
     }
 
@@ -49,9 +45,8 @@ public class SortService implements Service{
         }
     }
 
-    public void sortArray()
-    {
-        MySorting.quickSort(this.mainCollection, 0, this.mainCollection.size() - 1, new UniversalComparator());
+    public void sortArray(){
+        System.out.println("The array have been sorted");
     }
 
     public void showExistingArray(){

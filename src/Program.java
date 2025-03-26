@@ -1,14 +1,12 @@
 package src;
 
-import src.algorithms.MyArrayList;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Program {
     private Service service;
-    private MyArrayList<Object> mainCollection = new MyArrayList<>();
+    private List<Object> mainCollection = new ArrayList<>();
 
     //Метод в котором создается меню
     public void run(){
@@ -18,17 +16,17 @@ public class Program {
 
         outerLoop:
         while(true) {
-            System.out.println("| Choose option (1) for collection fill or (2) for collection sort, (3) for element search inside the collection or (4) for exit...");
+            System.out.println("| Choose option (1) for collection fill or (2) for collection sort, choose (3) if you want to exit...");
             String choice = scanner.nextLine();
             Integer validatedChoice = validator.validateInteger(choice);
 
             switch(validatedChoice){
                 case 0 -> System.out.println("Invalid. Please enter only the numbers listed above");
-                case 1,2,3 -> {
+                case 1,2 -> {
                     setService(validatedChoice);
                     service.execute();
                 }
-                case 4 -> {
+                case 3 -> {
                     System.out.println("Exiting the program");
                     break outerLoop;
                 }
@@ -45,9 +43,6 @@ public class Program {
                 break;
             case 2:
                 this.service = new SortService(this.mainCollection);
-                break;
-            case 3:
-                this.service = new SearchService(this.mainCollection);
                 break;
         }
     }

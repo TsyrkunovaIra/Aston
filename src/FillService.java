@@ -1,6 +1,5 @@
 package src;
 
-import src.algorithms.MyArrayList;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -10,10 +9,10 @@ import java.util.regex.Pattern;
 import static src.ClassInspector.*;
 
 public class FillService implements Service{
-    private MyArrayList<Object> mainCollection = new MyArrayList<>();
+    private List<Object> mainCollection = new ArrayList<>();
     private Validator validator = new Validator();
 
-    public FillService(MyArrayList<Object> mainCollection){
+    public FillService(List<Object> mainCollection){
         this.mainCollection = mainCollection;
     }
 
@@ -101,7 +100,6 @@ public class FillService implements Service{
         }
 
         clearFileContents("generated_classes.txt");
-
     }
 
     //Показать какие данные есть в массиве сейчас

@@ -1,26 +1,24 @@
 package src.algorithms;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 
 public class MyBinarySearch {
-
-    public static <T> int binarySearch(MyArrayList<T> values, T valueToFind, Comparator<? super T> comparator) {
-        return binary(values, valueToFind, 0, values.size() - 1, comparator);
+    public static <T extends Comparable<T>> int binarySearch(ArrayList<T> values, T valueToFind) {
+        return binary(values, valueToFind, 0, values.size()-1);
     }
 
-    private static <T> int binary(MyArrayList<T> values, T valueToFind, int l, int r, Comparator<? super T> comparator) {
+    private static<T extends Comparable<T>> int binary(ArrayList<T> values, T valueToFind, int l, int r) {
         while (l <= r) {
             int mid = (l + r) / 2;
-            int comparisonResult = comparator.compare(values.get(mid), valueToFind);
-
-            if (comparisonResult == 0) {
+            if (values.get(mid).compareTo(valueToFind) == 0) { //если объекты равны
                 return mid;
             }
-            if (comparisonResult < 0) {
+            if (values.get(mid).compareTo(valueToFind) < 0) { //если искомый больше опорного
                 l = mid + 1;
-            } else {
+            } else if (values.get(mid).compareTo(valueToFind) > 0) { //если искомый меньше опорного
                 r = mid - 1;
             }
+
         }
         return -1;
     }
