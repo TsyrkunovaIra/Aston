@@ -1,7 +1,4 @@
-package src.customs;
-
-import src.algorithms.MyBinarySearch;
-import src.algorithms.MySorting;
+package com.home.project.customs;
 
 import java.io.Serializable;
 import java.util.Objects;

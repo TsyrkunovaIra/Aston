@@ -1,9 +1,9 @@
 package com.home.project.service;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.io.Serializable;
+import java.util.*;
 
-public class MyArrayList {
+public class MyArrayList<T>  implements Iterable<T>, Serializable {
     private static final int DEFAULT_CAPACITY = 10;
     transient Object[] elements;
     private int size;
@@ -19,26 +19,32 @@ public class MyArrayList {
             throw new IllegalStateException("Начальная емкость (initialCapacity) не может быть меньше или равен нулю");
         }
     }
-    private int size() {
+
+    int size() {
         return size;
     }
 
-    private Object[] capacityGrowth(int minCapacity ) {
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    private Object[] capacityGrowth(int minCapacity) {
         int capacity = elements.length;
         if (capacity > 0) {
             Object[] newCapacity = new Object[(elements.length * 2)];
             System.arraycopy(elements, 0, newCapacity, 0, elements.length);
             return newCapacity;
-        }else{
+        } else {
             return elements = new Object[Math.max(DEFAULT_CAPACITY, minCapacity)];
-        }}
+        }
+    }
 
     private Object[] capacityGrowth() {
         return capacityGrowth(size + 1);
     }
 
-    public boolean add(Object object){
-        if (size == elements.length){
+    public boolean add(T object) {
+        if (size == elements.length) {
             elements = capacityGrowth();
         }
         elements[size] = object;
@@ -46,55 +52,94 @@ public class MyArrayList {
         return true;
     }
 
-    private int checkingIndex(int index){
-        if(index > size || index < 0){
+    public boolean addAll(MyArrayList otherList) {
+        if (otherList == null || otherList.size == 0) {
+            return false;
+        }
+
+        int newSize = this.size + otherList.size;
+        if (newSize > elements.length) {
+            elements = capacityGrowth(newSize);
+        }
+        System.arraycopy(otherList.elements, 0, this.elements, this.size, otherList.size);
+        this.size = newSize;
+        return true;
+    }
+
+    public void addAll(List<Object> list) {
+        for (Object obj : list) {
+            this.add((T) obj);
+        }
+    }
+
+    private int checkingIndex(int index) {
+        if (index > size || index < 0) {
             throw new IndexOutOfBoundsException("Элемент не найден!!! " + arrayLimit(index));
         }
         return index;
     }
 
-    private String arrayLimit (int index){
-        return "Количество элементов в массвие: " + size +"общий размер массива: "+ elements.length;
+    private String arrayLimit(int index) {
+        return "Количество элементов в массвие: " + size + "общий размер массива: " + elements.length;
     }
 
-    public void add(int index, Object object){
+    public void add(int index, Object object) {
         checkingIndex(index);
         final int i;
         Object[] elements;
         if ((i = size) == (elements = this.elements).length)
             elements = capacityGrowth();
-        System.arraycopy(elements, index, elements, index+1, i-index); // увеличиваем массив, сдвигая его с помощью копирования
+        System.arraycopy(elements, index, elements, index + 1, i - index); // увеличиваем массив, сдвигая его с помощью копирования
         elements[index] = object;
         size = i + 1;
     }
 
-    public Object get (int index){
+    public T get(int index) {
         checkingIndex(index);
-        return elements[index];
+        return (T) elements[index];
     }
 
-    public Object remove (int index){
+    public T remove (int index){
         checkingIndex(index);
         Object[] objects = elements;
         elements = new Object[objects.length-1];
-        Object object = objects[index];
+        T object = (T) objects[index];
         System.arraycopy(objects,0,elements,0,index);
         System.arraycopy(objects,index +1, elements, index,objects.length);
         size--;
         return object;
     }
 
-    public void clear(){
+    public void clear() {
         Object[] objects = elements;
-        for (int s = size, i =size = 0; i < s; i++)
-            objects[i]= null;
+        for (int s = size, i = size = 0; i < s; i++)
+            objects[i] = null;
+    }
+    public T set(int index, T element) {
+        checkingIndex(index);
+        T oldElement = (T) elements[index];
+        elements[index] = element;
+        return oldElement;
     }
 
-    public void sort(Comparator<Object> objectComparator) {
-        Arrays.sort(elements, 0, size, objectComparator);
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private int index = 0;
 
+            @Override
+            public boolean hasNext() {
+                return index < size;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new java.util.NoSuchElementException();
+                }
+                return (T) elements[index++];
+            }
+        };
     }
 
 }
-
-

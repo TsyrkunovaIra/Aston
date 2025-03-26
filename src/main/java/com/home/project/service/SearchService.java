@@ -1,17 +1,14 @@
-package src;
-
-import src.algorithms.MyArrayList;
-import src.algorithms.MyBinarySearch;
-import src.algorithms.UniversalComparator;
+package com.home.project.service;
 
 import java.lang.reflect.Field;
 import java.util.Scanner;
 
 public class SearchService implements Service{
     Validator validator = new Validator();
-    MyArrayList<Object> mainCollection = new MyArrayList<>();
+    MyArrayList mainCollection = new MyArrayList<>();
 
     public SearchService(MyArrayList<Object> mainCollection){
+
         this.mainCollection = mainCollection;
     }
 
@@ -64,7 +61,6 @@ public class SearchService implements Service{
             }
         }
     }
-
     public void findTheElement() {
         System.out.println("Please enter new object with its properties in this format: <ClassName>, <property1>, <property2>, <property3>");
         ClassInspector.showClassesAndFields();

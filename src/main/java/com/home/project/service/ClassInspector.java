@@ -1,15 +1,13 @@
-package src;
+package com.home.project.service;
 
-import src.customs.Bus;
-import src.customs.Student;
-import src.customs.User;
+import com.home.project.customs.Bus;
+import com.home.project.customs.Student;
+import com.home.project.customs.User;
 
 import java.io.*;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -78,6 +76,8 @@ public class ClassInspector {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  InvocationTargetException e) {
             throw new RuntimeException("Error creating object: " + e.getMessage(), e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
     }
 

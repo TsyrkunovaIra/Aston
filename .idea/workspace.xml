@@ -4,27 +4,144 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a9ed6d9-6473-4411-b12a-af34a0767805" name="Changes" comment="test run successfully">
-      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" />
+    <list default="true" id="6a9ed6d9-6473-4411-b12a-af34a0767805" name="Changes" comment="clear master">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_13_58__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_13_58__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_20_15__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_20_15__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_20_15__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_03_2025_20_15__Changes_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_34__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_34__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_34__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_34__Changes_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_43__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_43__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_45__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_45__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_45__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_03_2025_20_45__Changes_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_03_2025_21_09__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_03_2025_21_09__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BinarySearch.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Sorting.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ClassInspector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/ClassInspector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FillService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/FillService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SearchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/SearchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/Service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SortService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/SortService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/Validator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithms/MyArrayList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithms/MyBinarySearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/MyBinarySearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithms/MySorting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/MySorting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algorithms/UniversalComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/UniversalComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/customs/Bus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/customs/Bus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/customs/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/customs/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/customs/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/customs/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/home/project/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/home/project/model/Bus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/home/project/model/Student.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/home/project/model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/home/project/service/MyArrayList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/home/project/service/MyArrayList.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/Kirill-working-programm" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "TsyrkunovaIra"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="ffabf4f9-505f-4ce0-b2e7-2509ff3c216b" />
+        <option name="url" value="https://github.com/TsyrkunovaIra/Aston.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/User/IdeaProjects/Aston1"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\IdeaProjects\Aston1\src\main\java\com\home\project" />
+      <recent name="C:\Users\User\IdeaProjects\Aston1\src\main\java\com\home" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.home.project.Main" />
+      <module name="Aston1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.home.project.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="test run successfully">
+      <option name="closed" value="true" />
+      <created>1743011663583</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743011663583</updated>
+    </task>
+    <task id="LOCAL-00002" summary="clear master">
+      <option name="closed" value="true" />
+      <created>1743011706403</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743011706403</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test run successfully" />
-    <option name="LAST_COMMIT_MESSAGE" value="test run successfully" />
+    <MESSAGE value="clear master" />
+    <option name="LAST_COMMIT_MESSAGE" value="clear master" />
   </component>
 </project>

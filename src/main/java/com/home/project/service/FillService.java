@@ -1,12 +1,10 @@
-package src;
+package com.home.project.service;
 
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.regex.Pattern;
 
-import static src.ClassInspector.*;
+import static com.home.project.service.ClassInspector.*;
 
 public class FillService implements Service{
     private List<Object> mainCollection = new ArrayList<>();

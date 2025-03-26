@@ -1,8 +1,8 @@
-package src.algorithms;
+package com.home.project.service;
 
-import src.customs.Bus;
-import src.customs.Student;
-import src.customs.User;
+import com.home.project.customs.Bus;
+import com.home.project.customs.Student;
+import com.home.project.customs.User;
 
 import java.util.Comparator;
 
