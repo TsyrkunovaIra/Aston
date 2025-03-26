@@ -1,15 +1,21 @@
 package src;
 
+import src.algorithms.MyArrayList;
+
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 import java.util.regex.Pattern;
 
+import static src.ClassInspector.*;
+
 public class FillService implements Service{
-    private List<Object> mainCollection = new ArrayList<>();
+    private MyArrayList<Object> mainCollection = new MyArrayList<>();
     private Validator validator = new Validator();
+
+    public FillService(MyArrayList<Object> mainCollection){
+        this.mainCollection = mainCollection;
+    }
 
     public void execute(){
         showMenu();
@@ -17,7 +23,7 @@ public class FillService implements Service{
 
     // Вывод меню заполнения массива в консоль
     public void showMenu(){
-        System.out.println("| You chose FillService. Now, you can pick:");
+        System.out.println("| You chose Fill-Service. Now, you can pick:");
         System.out.println("| 1. Add objects to collection manually");
         System.out.println("| 2. Add objects from file");
         System.out.println("| 3. Show what inside the collection right now");
@@ -41,7 +47,7 @@ public class FillService implements Service{
                     showExistingArray();
                 }
                 case 4 ->{
-                    System.out.println("Exiting the \"Fill Array\" menu");
+                    System.out.println("Exiting the \"Fill-Service\" menu");
                     break outerLoop;
                 }
                 default -> System.out.println("Invalid number. Please enter only numbers listed above");
@@ -52,15 +58,50 @@ public class FillService implements Service{
     //Заполнить массив вручную
     public void fillManually(){
         System.out.println("Please enter new object with its properties in this format: <ClassName>, <property1>, <property2>, <property3>");
+        ClassInspector.showClassesAndFields();
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        if(validator.validateClass(input)){
+        if(validator.validateClass(input) && validator.validateClassAndFields(input)){
             System.out.println("Valid. Process and add");
+            Object object = ClassInspector.transformStringtoObject(input);
+            this.mainCollection.add(object);
+        }else{
+            System.out.println("Invalid");
         }
     }
     //Заполнить массив из файла
-    public void fillFromFile(){
-        System.out.println("Add objects from file");
+    public void fillFromFile() {
+        String intChoice;
+        Integer numberOfObjects;
+        while (true) {
+            System.out.println("Please enter number(1-100) of object that u want to add to collection from a file:");
+            Scanner scanner = new Scanner(System.in);
+            intChoice = scanner.nextLine();
+            Integer validatedChoice = validator.validateInteger(intChoice);
+            if (validatedChoice == 0) {
+                System.out.println("Invalid number.");
+            } else {
+                numberOfObjects = Integer.valueOf(intChoice);
+                break;
+            }
+        }
+        List<Object> objects = new ArrayList<>();
+        for (int i = 0; i < numberOfObjects; i++) {
+            Object obj = createRandomObject();
+            objects.add(obj);
+        }
+
+        serializeObjectsToFile(objects, "generated_classes.txt");
+        List<Object> deserializedObjects = deserializeObjectsFromFile("generated_classes.txt");
+
+        // Добавляем десереализованные обьекты в коллекцию
+        if (deserializedObjects != null) {
+            this.mainCollection.addAll(deserializedObjects);
+            System.out.println("Objects have been added to the mainCollection.");
+        }
+
+        clearFileContents("generated_classes.txt");
+
     }
 
     //Показать какие данные есть в массиве сейчас
@@ -75,7 +116,7 @@ public class FillService implements Service{
                     try {
                         System.out.println("* " + field.getName() + " - " + field.get(object));
                     }catch(IllegalAccessException e){
-                        System.out.println(e);
+                        System.out.println(e + "- exception");
                     }
                 }
                 System.out.println(" ");
