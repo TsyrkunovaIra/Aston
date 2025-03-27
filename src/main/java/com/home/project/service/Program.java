@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Program {
     private Service service;
-    private List<Object> mainCollection = new ArrayList<>();
+    private MyArrayList<Object> mainCollection = new MyArrayList<>();
 
     //Метод в котором создается меню
     public void run(){
@@ -44,7 +44,11 @@ public class Program {
             case 2:
                 this.service = new SortService(this.mainCollection);
                 break;
+            case 3:
+                this.service = new SearchService(this.mainCollection);
+                break;
+        }
         }
     }
 
-}
+

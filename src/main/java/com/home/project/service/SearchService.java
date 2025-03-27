@@ -5,10 +5,9 @@ import java.util.Scanner;
 
 public class SearchService implements Service{
     Validator validator = new Validator();
-    MyArrayList mainCollection = new MyArrayList<>();
+    MyArrayList<Object> mainCollection = new MyArrayList<>();
 
     public SearchService(MyArrayList<Object> mainCollection){
-
         this.mainCollection = mainCollection;
     }
 

@@ -7,14 +7,14 @@ import java.util.*;
 import static com.home.project.service.ClassInspector.*;
 
 public class FillService implements Service{
-    private List<Object> mainCollection = new ArrayList<>();
+    private MyArrayList<Object> mainCollection = new MyArrayList<>();
     private Validator validator = new Validator();
 
-    public FillService(List<Object> mainCollection){
+    public FillService(MyArrayList<Object> mainCollection){
         this.mainCollection = mainCollection;
     }
-
     public void execute(){
+
         showMenu();
     }
 

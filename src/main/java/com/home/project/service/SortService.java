@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SortService implements Service{
-    private List<Object> mainCollection = new ArrayList<>();
+    private MyArrayList<Object> mainCollection = new MyArrayList<>();
     private Validator validator = new Validator();
 
-    public SortService(List<Object> mainCollection){
+    public SortService(MyArrayList<Object> mainCollection){
         this.mainCollection = mainCollection;
     }
 
@@ -45,10 +45,10 @@ public class SortService implements Service{
         }
     }
 
-    public void sortArray(){
-        System.out.println("The array have been sorted");
+    public void sortArray()
+    {
+        MySorting.quickSort(this.mainCollection, 0, this.mainCollection.size() - 1, new UniversalComparator());
     }
-
     public void showExistingArray(){
         if(this.mainCollection.isEmpty()){
             System.out.println("Collection is empty right now");
