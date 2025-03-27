@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class MyArrayList<T>  implements Iterable<T>, Serializable {
-
+    private static final long serialVersionUID = 1L;
     private static final int DEFAULT_CAPACITY = 10;
     transient Object[] elements;
     private int size;
